@@ -92,7 +92,7 @@ nccreate('myfile.nc','CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
 ncwriteatt('myfile.nc','CONFIG_MISSION_NUMBER','long_name','Float mission number of each profile');
 ncwriteatt('myfile.nc','CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
-ncwriteatt('myfile.nc','CONFIG_MISSION_NUMBER','_FillValue',' ');
+ncwriteatt('myfile.nc','CONFIG_MISSION_NUMBER','_FillValue',99999);
 
 % 3.1で追加になったアトリビュートを追加
 ncwriteatt('myfile.nc','JULD','standard_name','time');
@@ -118,7 +118,67 @@ ncwriteatt('myfile.nc','TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt('myfile.nc','PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
 
+% INST_REFERENCEは削除された変数なので、そこだけは書かないようにして最終的に書きだす
+path = 'c:\Github\31conv\';
+updatefile = 'updatefile.nc';
+readfile = 'myfile.nc';
+
+finfo = ncinfo([readfile]);
+
+% netcdf 読み込み
+% dimensions
+for i1=1:size(finfo.Dimensions,2)
+    eval([finfo.Dimensions(i1).Name '=finfo.Dimensions(i1).Length;']);
+end
+
+% valiables
+for i1=1:size(finfo.Variables,2)
+    eval([finfo.Variables(i1).Name '=ncread([readfile],finfo.Variables(i1).Name);']);
+end
+
+% 読み込んだので書きだす
+% dimensionsについてはよくわからんので中島さんソースのまま。
+% ncid = netcdf.create([path updatefile],'NC_NOCLOBBER');
+
+% テスト中は存在チェックしない
+ncid = netcdf.create([path updatefile],'NC_CLOBBER');
+for i1=1:size(finfo.Dimensions,2)
+    if strcmp(finfo.Dimensions(i1).Name,'N_HISTORY') == 0
+        netcdf.defDim(ncid,finfo.Dimensions(i1).Name,finfo.Dimensions(i1).Length);
+    end
+end
+netcdf.defDim(ncid,'N_HISTORY',netcdf.getConstant('NC_UNLIMITED'));
+netcdf.close(ncid);
+
+
+% Variables INST_REFERENCEだったらそこは書かない。
+% write netcdf contents
+for i1=1:size(finfo.Variables,2)
+
+    % variables
+    ex1='';
+    for i2=1:size(finfo.Variables(i1).Dimensions,2)
+        ex1=[ex1 '''' finfo.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo.Variables(i1).Dimensions(i2).Length) ','];
+    end
+    ex1=ex1(1:end-1);
+    
+    if strcmp(finfo.Variables(i1).Name,'INST_REFERENCE') == 0
+      eval(['nccreate(updatefile,finfo.Variables(i1).Name,''Dimensions'',{' ex1 '},''Datatype'',finfo.Variables(i1).Datatype,''Format'',''classic'');'])
+    end
+
+    % attributes
+    for i3=1:size(finfo.Variables(i1).Attributes,2)
+        ncwriteatt(updatefile,finfo.Variables(i1).Name,finfo.Variables(i1).Attributes(i3).Name,finfo.Variables(i1).Attributes(i3).Value);
+    end
+
+    % data
+    eval(['ncwrite(updatefile,finfo.Variables(i1).Name,' finfo.Variables(i1).Name ');'])
+end
+
+
 
 
 % デバッグプリント
-%ncdisp('myfile.nc','PLATFORM_TYPE');
+%ncdisp('myfile.nc','CONFIG_MISSION_NUMBER');
+%ncdisp('myfile.nc','CYCLE_NUMBER');
+ncdisp('updatefile.nc');
