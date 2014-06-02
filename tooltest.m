@@ -1,4 +1,4 @@
-copyfile(which('Rtest.nc'),'myfile.nc');
+copyfile(which('Rtest.nc'),'c:\Github\31conv\myfile.nc');
 %fileattrib('myfile.nc','+w');
 % file open
 ncid = netcdf.open('myfile.nc','NC_WRITE')
