@@ -32,8 +32,9 @@ netcdf.defDim(ncid1,'N_HISTORY',netcdf.getConstant('NC_UNLIMITED'));
 netcdf.close(ncid1);
 
 
-% Variables INST_REFERENCEだったらそこは書かない。
+% Variables INST_REFERENCEだったらそこは書かない。（削除された変数なので）
 % write netcdf contents
+
 for i1=1:size(finfo.Variables,2)
 
     % variables
@@ -62,7 +63,7 @@ end
 
 
 % file open
-ncid = netcdf.open('updatefile.nc','NC_WRITE')
+ncid = netcdf.open([path updatefile],'NC_WRITE');
 
 % 定義モードにする
 netcdf.reDef(ncid);
@@ -124,63 +125,60 @@ netcdf.sync(ncid);
 netcdf.close(ncid);
 
 % 3.1で増えた変数を追加
-nccreate('updatefile.nc','PLATFORM_TYPE',...
+nccreate(updatefile,'PLATFORM_TYPE',...
     'Dimensions',{'N_PROF','STRING32'},...
     'Datatype','char');
-ncwriteatt('updatefile.nc','PLATFORM_TYPE','long_name','Type of float');
-ncwriteatt('updatefile.nc','PLATFORM_TYPE','conventions','Argo reference table 23');
-ncwriteatt('updatefile.nc','PLATFORM_TYPE','_FillValue',' ');
+ncwriteatt(updatefile,'PLATFORM_TYPE','long_name','Type of float');
+ncwriteatt(updatefile,'PLATFORM_TYPE','conventions','Argo reference table 23');
+ncwriteatt(updatefile,'PLATFORM_TYPE','_FillValue',' ');
 
-nccreate('updatefile.nc','FLOAT_SERIAL_NO',...
+nccreate(updatefile,'FLOAT_SERIAL_NO',...
     'Dimensions',{'N_PROF','STRING32'},...
     'Datatype','char');
-ncwriteatt('updatefile.nc','FLOAT_SERIAL_NO','long_name','Serial number of the float');
-ncwriteatt('updatefile.nc','FLOAT_SERIAL_NO','_FillValue',' ');
+ncwriteatt(updatefile,'FLOAT_SERIAL_NO','long_name','Serial number of the float');
+ncwriteatt(updatefile,'FLOAT_SERIAL_NO','_FillValue',' ');
 
-nccreate('updatefile.nc','FIRMWARE_VERSION',...
+nccreate(updatefile,'FIRMWARE_VERSION',...
     'Dimensions',{'N_PROF','STRING16'},...
     'Datatype','char');
-ncwriteatt('updatefile.nc','FIRMWARE_VERSION','long_name','Instrument firmware version');
-ncwriteatt('updatefile.nc','FIRMWARE_VERSION','_FillValue',' ');
+ncwriteatt(updatefile,'FIRMWARE_VERSION','long_name','Instrument firmware version');
+ncwriteatt(updatefile,'FIRMWARE_VERSION','_FillValue',' ');
 
-nccreate('updatefile.nc','VERTICAL_SAMPLING_SCHEME',...
+nccreate(updatefile,'VERTICAL_SAMPLING_SCHEME',...
     'Dimensions',{'N_PROF','STRING256'},...
     'Datatype','char');
-ncwriteatt('updatefile.nc','VERTICAL_SAMPLING_SCHEME','long_name','Vertical sampling scheme');
-ncwriteatt('updatefile.nc','VERTICAL_SAMPLING_SCHEME','conventions','Argo reference table 16');
-ncwriteatt('updatefile.nc','VERTICAL_SAMPLING_SCHEME','_FillValue',' ');
+ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','long_name','Vertical sampling scheme');
+ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','conventions','Argo reference table 16');
+ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','_FillValue',' ');
 
-nccreate('updatefile.nc','CONFIG_MISSION_NUMBER',...
+nccreate(updatefile,'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
-ncwriteatt('updatefile.nc','CONFIG_MISSION_NUMBER','long_name','Float mission number of each profile');
-ncwriteatt('updatefile.nc','CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
-ncwriteatt('updatefile.nc','CONFIG_MISSION_NUMBER','_FillValue',99999);
+ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','long_name','Float mission number of each profile');
+ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
+ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','_FillValue',99999);
 
 % 3.1で追加になったアトリビュートを追加
-ncwriteatt('updatefile.nc','JULD','standard_name','time');
-ncwriteatt('updatefile.nc','JULD','resolution','X');
-ncwriteatt('updatefile.nc','JULD','axis','T');
+ncwriteatt(updatefile,'JULD','standard_name','time');
+ncwriteatt(updatefile,'JULD','resolution','X');
+ncwriteatt(updatefile,'JULD','axis','T');
 
-ncwriteatt('updatefile.nc','JULD_LOCATION','resolution','X');
+ncwriteatt(updatefile,'JULD_LOCATION','resolution','X');
 
-ncwriteatt('updatefile.nc','LATITUDE','standard_name','latitude');
-ncwriteatt('updatefile.nc','LATITUDE','axis','Y');
+ncwriteatt(updatefile,'LATITUDE','standard_name','latitude');
+ncwriteatt(updatefile,'LATITUDE','axis','Y');
 
-ncwriteatt('updatefile.nc','LONGITUDE','standard_name','longitude');
-ncwriteatt('updatefile.nc','LONGITUDE','axis','X');
+ncwriteatt(updatefile,'LONGITUDE','standard_name','longitude');
+ncwriteatt(updatefile,'LONGITUDE','axis','X');
 
-ncwriteatt('updatefile.nc','SCIENTIFIC_CALIB_DATE','long_name','Date of calibration');
+ncwriteatt(updatefile,'SCIENTIFIC_CALIB_DATE','long_name','Date of calibration');
 
-ncwriteatt('updatefile.nc','PRES','standard_name','PRES');
-ncwriteatt('updatefile.nc','TEMP','standard_name','TEMP');
-ncwriteatt('updatefile.nc','PSAL','standard_name','PSAL');
+ncwriteatt(updatefile,'PRES','standard_name','PRES');
+ncwriteatt(updatefile,'TEMP','standard_name','TEMP');
+ncwriteatt(updatefile,'PSAL','standard_name','PSAL');
 
-ncwriteatt('updatefile.nc','PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
-ncwriteatt('updatefile.nc','TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
-ncwriteatt('updatefile.nc','PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
-
-
-
+ncwriteatt(updatefile,'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
+ncwriteatt(updatefile,'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
+ncwriteatt(updatefile,'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
 
 
@@ -188,4 +186,4 @@ ncwriteatt('updatefile.nc','PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 % デバッグプリント
 %ncdisp('myfile.nc','CONFIG_MISSION_NUMBER');
 %ncdisp('myfile.nc','CYCLE_NUMBER');
-ncdisp('updatefile.nc');
+ncdisp(updatefile);
