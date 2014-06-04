@@ -1,4 +1,4 @@
-path = 'C:\Github\31conv';
+path = '/home/argo/akazawa';
 updatefile = 'updatefile.nc';
 readfile = 'myfile.nc';
 origfile = 'Rtest.nc';
