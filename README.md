@@ -24,7 +24,6 @@ Argo User's Manual　Version2.31(2011年6月14日版）からVersion3.1（FIX日未定）へ変
 今後の予定(未実装な機能）
 --------
 + データベースからの読み取り（教えてもらったコード）
-#1
 
 ```c
 logintimeout(5);  
@@ -38,7 +37,6 @@ ver_sam_sc=curs1.Data;
 
 + 入出力ファイルの固定化をやめる  
     入力ファイルの自動判定もできると良い（Dファイル、Rファイルとあるため、本ツールはDファイルのみ対象）
-#2
 
 + エラーチェックの導入  
     Manual2.31ではFIRMWARE_VERSIONがあるが、JAMSTECが現在持っているProfileには存在しない等
