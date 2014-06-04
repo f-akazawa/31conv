@@ -1,4 +1,4 @@
-path = 'c:\Github\31conv\';
+path = 'C:\Github\31conv';
 updatefile = 'updatefile.nc';
 readfile = 'myfile.nc';
 origfile = 'Rtest.nc';
@@ -180,6 +180,14 @@ ncwriteatt(updatefile,'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
 ncwriteatt(updatefile,'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt(updatefile,'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
+% データベース接続テスト
+logintimeout(5);
+conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.16.201:1521:');
+ex1=exec(conn,['select obs_mode from float_info,sensor_axis_info where sensor_axis_info.argo_id=float_info.argo_id and wmo_no=''''''5901601''''' 'and axis_no=1 and param_id=1']);
+curs1=fetch(ex1);
+close(conn);
+
+ver_sam_sc=curs1.Data;
 
 
 
