@@ -2,11 +2,10 @@ function conv31(filename)
 path = '/home/argo/akazawa/';
 updatefile = ['new' filename];
 readfile = 'tempfile.nc';
-origfile = filename;
 wmo_no = strsplit(filename,{'D','_'},'CollapseDelimiters',true);
 wmo = wmo_no{2};
 % オリジナルを消さないように作業ファイルにコピーする
-copyfile(which([path origfile]),[path readfile]);
+copyfile(which([path filename]),[path readfile]);
 
 finfo = ncinfo([path readfile]);
 
