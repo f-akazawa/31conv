@@ -18,7 +18,6 @@ Argo User's Manual　Version2.31(2011年6月14日版）からVersion3.1（FIX日未定）へ変
 
 パラメータの解説
 ----------------
-今後パラメータを渡して大量に変換できるようにする。
  
     >>conv31(filename)
  
