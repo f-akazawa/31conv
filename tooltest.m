@@ -49,7 +49,6 @@ for i1=1:size(finfo.Variables,2)
 
         % attributes
         for i3=1:size(finfo.Variables(i1).Attributes,2)
-            hoge = finfo.Variables(i1).Name;
             ncwriteatt(updatefile,finfo.Variables(i1).Name,finfo.Variables(i1).Attributes(i3).Name,finfo.Variables(i1).Attributes(i3).Value);
         end
     
@@ -72,7 +71,7 @@ netcdf.reDef(ncid);
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical profile');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history','history');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ creation'));
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
@@ -124,25 +123,41 @@ netcdf.endDef(ncid);
 netcdf.sync(ncid);
 netcdf.close(ncid);
 
-% 3.1で増えた変数を追加
+% 3.1で増えた変数を追加、DBからデータも読んでおく
+% データベース接続と変数への格納
+logintimeout(5);
+conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.16.201:1521:');
+ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') from float_info,sensor_axis_info,m_float_types where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' '5901601' ''' and axis_no=1 and param_id=1']);
+curs1=fetch(ex1);
+close(conn);
+
+platform_type=curs1.Data{1};
+float_serial_no=curs1.Data{2};
+firmware_version=curs1.Data{3};
+vertical_sampling_scheme=curs1.Data{4};
+
+% 
 nccreate(updatefile,'PLATFORM_TYPE',...
     'Dimensions',{'N_PROF','STRING32'},...
     'Datatype','char');
 ncwriteatt(updatefile,'PLATFORM_TYPE','long_name','Type of float');
 ncwriteatt(updatefile,'PLATFORM_TYPE','conventions','Argo reference table 23');
 ncwriteatt(updatefile,'PLATFORM_TYPE','_FillValue',' ');
+ncwrite(updatefile,'PLATFORM_TYPE',platform_type);
 
 nccreate(updatefile,'FLOAT_SERIAL_NO',...
     'Dimensions',{'N_PROF','STRING32'},...
     'Datatype','char');
 ncwriteatt(updatefile,'FLOAT_SERIAL_NO','long_name','Serial number of the float');
 ncwriteatt(updatefile,'FLOAT_SERIAL_NO','_FillValue',' ');
+ncwrite(updatefile,'FLOAT_SERIAL_NO',float_serial_no);
 
 nccreate(updatefile,'FIRMWARE_VERSION',...
     'Dimensions',{'N_PROF','STRING16'},...
     'Datatype','char');
 ncwriteatt(updatefile,'FIRMWARE_VERSION','long_name','Instrument firmware version');
 ncwriteatt(updatefile,'FIRMWARE_VERSION','_FillValue',' ');
+ncwrite(updatefile,'FIRMWARE_VERSION',firmware_version);
 
 nccreate(updatefile,'VERTICAL_SAMPLING_SCHEME',...
     'Dimensions',{'N_PROF','STRING256'},...
@@ -150,12 +165,14 @@ nccreate(updatefile,'VERTICAL_SAMPLING_SCHEME',...
 ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','long_name','Vertical sampling scheme');
 ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','conventions','Argo reference table 16');
 ncwriteatt(updatefile,'VERTICAL_SAMPLING_SCHEME','_FillValue',' ');
+ncwrite(updatefile,'VERTICAL_SAMPLING_SCHEME',vertical_sampling_scheme);
 
 nccreate(updatefile,'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
 ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','long_name','Float mission number of each profile');
 ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
 ncwriteatt(updatefile,'CONFIG_MISSION_NUMBER','_FillValue',99999);
+ncwrite(updatefile,'CONFIG_MISSION_NUMBER',1);
 
 % 3.1で追加になったアトリビュートを追加
 ncwriteatt(updatefile,'JULD','standard_name','time');
@@ -179,15 +196,6 @@ ncwriteatt(updatefile,'PSAL','standard_name','PSAL');
 ncwriteatt(updatefile,'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
 ncwriteatt(updatefile,'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt(updatefile,'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
-
-% データベース接続テスト
-logintimeout(5);
-conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.16.201:1521:');
-ex1=exec(conn,['select obs_mode from float_info,sensor_axis_info where sensor_axis_info.argo_id=float_info.argo_id and wmo_no=''''''5901601''''' 'and axis_no=1 and param_id=1']);
-curs1=fetch(ex1);
-close(conn);
-
-ver_sam_sc=curs1.Data;
 
 
 
