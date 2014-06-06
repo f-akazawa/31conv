@@ -1,8 +1,10 @@
+function conv31(filename)
 path = '/home/argo/akazawa/';
-updatefile = 'updatefile.nc';
-readfile = 'myfile.nc';
-origfile = 'D5901601_001.nc';
-
+updatefile = ['new' filename];
+readfile = 'tempfile.nc';
+origfile = filename;
+wmo_no = strsplit(filename,{'D','_'},'CollapseDelimiters',true);
+wmo = wmo_no{2};
 % オリジナルを消さないように作業ファイルにコピーする
 copyfile(which([path origfile]),[path readfile]);
 
@@ -127,7 +129,7 @@ netcdf.close(ncid);
 % データベース接続と変数への格納
 logintimeout(5);
 conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.16.201:1521:');
-ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') from float_info,sensor_axis_info,m_float_types where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' '5901601' ''' and axis_no=1 and param_id=1']);
+ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') from float_info,sensor_axis_info,m_float_types where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and param_id=1']);
 curs1=fetch(ex1);
 close(conn);
 
@@ -202,4 +204,4 @@ ncwriteatt(updatefile,'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 % デバッグプリント
 %ncdisp('myfile.nc','CONFIG_MISSION_NUMBER');
 %ncdisp('myfile.nc','CYCLE_NUMBER');
-ncdisp(updatefile);
+%ncdisp(updatefile);
