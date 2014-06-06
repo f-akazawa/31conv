@@ -1,7 +1,7 @@
-path = '/home/argo/akazawa';
+path = '/home/argo/akazawa/';
 updatefile = 'updatefile.nc';
 readfile = 'myfile.nc';
-origfile = 'Rtest.nc';
+origfile = 'D5901601_001.nc';
 
 % オリジナルを消さないように作業ファイルにコピーする
 copyfile(which([path origfile]),[path readfile]);
