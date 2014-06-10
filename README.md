@@ -30,6 +30,8 @@ Argo User's Manual　Version2.31(2011年6月14日版）からVersion3.1（FIX日未定）へ変
 + エラーチェックの導入  
     Manual2.31ではFIRMWARE_VERSIONがあるが、JAMSTECが現在持っているProfileには存在しない等がある。
 
++ ARGOS通信の自動判別  
+	netCDFデータファイル内,POSITIONING_SYSTEMの値がARGOSのファイルのみ変換対象
 
 ライセンス
 ----------
