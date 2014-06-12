@@ -155,7 +155,7 @@ float_serial_no=curs1.Data{2};
 firmware_version=curs1.Data{3};
 vertical_sampling_scheme=curs1.Data{4};
 
-% 
+% 3.1で増えた変数を追加、一番下に追加されてしまう。。
 nccreate([workpath updatefile],'PLATFORM_TYPE',...
     'Dimensions',{'STRING32','N_PROF'},...
     'Datatype','char');
@@ -219,6 +219,8 @@ ncwriteatt([workpath updatefile],'PRES_ADJUSTED','standard_name','PRES_ADJUSTED'
 ncwriteatt([workpath updatefile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt([workpath updatefile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
+
+% 出来上がったので変数の順番をこのへんで並べ替える
 
 
 % デバッグプリント
