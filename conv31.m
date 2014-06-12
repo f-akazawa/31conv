@@ -193,6 +193,9 @@ ncwriteatt([workpath updatefile],'CONFIG_MISSION_NUMBER','conventions','1..N , 1
 ncwriteatt([workpath updatefile],'CONFIG_MISSION_NUMBER','_FillValue',99999);
 ncwrite([workpath updatefile],'CONFIG_MISSION_NUMBER',1);
 
+% format_version 2.2 > 3.1
+ncwrite([workpath updatefile],'FORMAT_VERSION','3.1');
+
 % 3.1で追加になったアトリビュートを追加
 ncwriteatt([workpath updatefile],'JULD','standard_name','time');
 ncwriteatt([workpath updatefile],'JULD','resolution','X');
