@@ -247,6 +247,7 @@ netcdf.close(ncid2);
 
 % write netcdf contents
 % 追加パラメータを途中に追加させるために都合3回ループさせている
+% case文の順番に書きだされる。
 % もう少しスマートに書けないものか？
 
 for i1=1:size(finfo2.Variables,2)
