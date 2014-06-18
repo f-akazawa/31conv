@@ -1,4 +1,6 @@
 function conv31(filename)
+
+% 作業ディレクトリの場所、tempfile.ncはここに作る
 workpath = '/home/argo/akazawa/';
 
 % 引数からファイルパス、ファイル名を抜き出し
@@ -17,7 +19,7 @@ tempfile = 'tempfile.nc';
 % 最終出力ファイル名を作る (元ファイル_NEW.nc)
 updatefile = strcat(name,'_NEW',ext);
 
-% DBから読むのに必要なWMO番号をファイル名から抜き出す。
+% DBから読むのに必要なWMO番号をファイル名から抜き出す。（Dファイルのみ変換対象）
 wmo_no = strsplit(name,{'D','_'},'CollapseDelimiters',true);
 wmo = wmo_no{2};
 
@@ -25,9 +27,9 @@ wmo = wmo_no{2};
 % 作成はシェルスクリプトでやる予定・・・
 % outpath = strcat(workpath,wmo,'/');
 
-% オリジナルを消さないように作業ファイルにコピーする
-% copyfile(filename,[workpath readfile]);
 
+% 以下から処理本体部分
+% ファイルポインタ取得
 finfo = ncinfo(filename);
 
 % netcdf 読み込み
@@ -44,7 +46,7 @@ end
 % 読み込んだので書きだす
 % INST_REFERENCEは削除された変数なので、そこだけは書かないようにして書きだす
 
-ncid1 = netcdf.create([workpath tempfile],'NC_NOCLOBBER');
+ncid1 = netcdf.create([workpath tempfile],'NC_CLOBBER');
 for i1=1:size(finfo.Dimensions,2)
     if strcmp(finfo.Dimensions(i1).Name,'N_HISTORY') == 0
         netcdf.defDim(ncid1,finfo.Dimensions(i1).Name,finfo.Dimensions(i1).Length);
@@ -222,9 +224,63 @@ ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
 ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
-
-% 出来上がったので変数の順番をこのへんで並べ替える
+%
 % tempfileを再読み込みしてマニュアル順に並び替える
+%
+
+% ファイルポインタ取得
+finfo2 = ncinfo([workpath tempfile]);
+
+% 以下tempfile書き出しと全く同じ
+% netcdf 読み込み
+% dimensions
+for i1=1:size(finfo2.Dimensions,2)
+    eval([finfo2.Dimensions(i1).Name '=finfo2.Dimensions(i1).Length;']);
+end
+
+% valiables
+for i1=1:size(finfo2.Variables,2)
+    eval([finfo2.Variables(i1).Name '=ncread([workpath tempfile],finfo2.Variables(i1).Name);']);
+end
+
+% 読み込んだので書きだす
+% INST_REFERENCEは削除された変数なので、そこだけは書かないようにして書きだす
+
+ncid2 = netcdf.create([workpath updatefile],'NC_NOCLOBBER');
+for i1=1:size(finfo2.Dimensions,2)
+    if strcmp(finfo2.Dimensions(i1).Name,'N_HISTORY') == 0
+        netcdf.defDim(ncid2,finfo2.Dimensions(i1).Name,finfo2.Dimensions(i1).Length);
+    end
+end
+netcdf.defDim(ncid2,'N_HISTORY',netcdf.getConstant('NC_UNLIMITED'));
+netcdf.close(ncid2);
+
+
+% Variables INST_REFERENCEだったらそこは書かない。（削除された変数なので）
+% write netcdf contents
+
+for i1=1:size(finfo2.Variables,2)
+
+    % variables
+    ex1='';
+    for i2=1:size(finfo2.Variables(i1).Dimensions,2)
+        ex1=[ex1 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
+    end
+    ex1=ex1(1:end-1);
+    
+    if strcmp(finfo2.Variables(i1).Name,'INST_REFERENCE') == 0
+          eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex1 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+
+        % attributes
+        for i3=1:size(finfo2.Variables(i1).Attributes,2)
+            ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+        end
+    
+
+        % data
+        eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+    end
+end
 
 
 % デバッグプリント
