@@ -246,6 +246,8 @@ netcdf.close(ncid2);
 
 
 % write netcdf contents
+% 追加パラメータを途中に追加させるために都合3回ループさせている
+% もう少しスマートに書けないものか？
 
 for i1=1:size(finfo2.Variables,2)
 
@@ -312,7 +314,7 @@ for i1=1:size(finfo2.Variables,2)
               'PROFILE_PRES_QC',...
               'PROFILE_TEMP_QC',...
               'PROFILE_PSAL_QC',...
-              'VERTICAL_SAMPLING_SCHEME',...
+              'VERTICAL_SAMPLING_SCHEME',... % 3,1から増えた部分
               'CONFIG_MISSION_NUMBER'}
 
             eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
