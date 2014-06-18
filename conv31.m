@@ -247,7 +247,6 @@ netcdf.close(ncid2);
 
 % write netcdf contents
 
-wline=1;
 for i1=1:size(finfo2.Variables,2)
 
     % variables
@@ -256,7 +255,7 @@ for i1=1:size(finfo2.Variables,2)
         ex2=[ex2 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
     end
     ex2=ex2(1:end-1);
-
+    
     % ここから
     switch (finfo2.Variables(i1).Name)
         case ('DATA_TYPE')
@@ -269,9 +268,7 @@ for i1=1:size(finfo2.Variables,2)
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
             % ここまでが書き出し部分
-            wline=wline+1;
         case ('FORMAT_VERSION')
-            %if(wline ==2)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -281,10 +278,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HANDBOOK_VERSION')
-            %if(wline ==3)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -294,10 +288,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('REFERENCE_DATE_TIME')
-            %if(wline ==4)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -307,10 +298,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PLATFORM_NUMBER')
-            %if(wline ==5)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -320,10 +308,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PROJECT_NAME')
-            %if(wline ==6)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -333,10 +318,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PI_NAME')
-            %if(wline ==7)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -346,10 +328,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('STATION_PARAMETERS')
-            %if(wline ==8)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -359,10 +338,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('CYCLE_NUMBER')
-            %if(wline ==9)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -372,10 +348,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DIRECTION')
-            %if(wline ==10)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -385,10 +358,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DATA_CENTRE')
-            %if(wline ==11)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -398,10 +368,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DATE_CREATION')
-            %if(wline ==12)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -411,10 +378,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DATE_UPDATE')
-            %if(wline ==13)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -424,10 +388,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DC_REFERENCE')
-            %if(wline ==14)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -437,10 +398,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DATA_STATE_INDICATOR')
-            %if(wline ==15)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -450,10 +408,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('DATA_MODE')
-            %if(wline ==16)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -463,10 +418,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
+% 3.1で追加された部分
         case ('PLATFORM_TYPE')
-            %if(wline ==17)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -476,10 +429,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('FLOAT_SERIAL_NO')
-            %if(wline ==18)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -489,10 +439,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('FIRMWARE_VERSION')
-            %if(wline ==19)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -502,10 +449,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('WMO_INST_TYPE')
-            %if(wline ==20)
+         case ('VERTICAL_SAMPLING_SCHEME')
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -515,153 +459,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('JULD')
-            %if(wline ==21)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('JULD_QC')
-            %if(wline ==22)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('JULD_LOCATION')
-            %if(wline ==23)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('LATITUDE')
-            %if(wline ==24)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('LONGITUDE')
-            %if(wline ==25)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('POSITION_QC')
-            %if(wline ==26)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('POSITIONING_SYSTEM')
-            %if(wline ==27)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('PROFILE_PRES_QC')
-            %if(wline ==28)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('PROFILE_TEMP_QC')
-            %if(wline ==29)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('PROFILE_PSAL_QC')
-            %if(wline ==30)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('VERTICAL_SAMPLING_SCHEME')
-            %if(wline ==31)
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('CONFIG_MISSION_NUMBER')
-            %if(wline ==32)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -671,10 +469,133 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
+% 3.1で追加された部分ここまで
+    end
+end
+        
+for i1=1:size(finfo2.Variables,2)
+
+    % variables
+    ex2='';
+    for i2=1:size(finfo2.Variables(i1).Dimensions,2)
+        ex2=[ex2 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
+    end
+    ex2=ex2(1:end-1);
+    
+    % ここから
+    switch (finfo2.Variables(i1).Name)
+        
+        case ('WMO_INST_TYPE')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('JULD')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('JULD_QC')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('JULD_LOCATION')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('LATITUDE')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('LONGITUDE')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('POSITION_QC')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('POSITIONING_SYSTEM')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('PROFILE_PRES_QC')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+       case ('PROFILE_TEMP_QC')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
+        case ('PROFILE_PSAL_QC')
+                % ここから書き出し部分
+                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+                % attributes
+                for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                end
+                % data
+                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+                % ここまでが書き出し部分
         case ('PRES')
-            %if(wline ==33)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -684,10 +605,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PRES_QC')
-            %if(wline ==34)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -697,10 +615,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PRES_ADJUSTED')
-            %if(wline ==35)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -710,10 +625,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PRES_ADJUSTED_QC')
-            %if(wline ==36)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -723,10 +635,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PRES_ADJUSTED_ERROR')
-            %if(wline ==37)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -736,10 +645,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('TEMP')
-            %if(wline ==38)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -749,10 +655,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('TEMP_QC')
-            %if(wline ==39)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -762,10 +665,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('TEMP_ADJUSTED')
-            %if(wline ==40)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -775,10 +675,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('TEMP_ADJUSTED_QC')
-            %if(wline ==41)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -788,10 +685,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('TEMP_ADJUSTED_ERROR')
-            %if(wline ==42)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -801,10 +695,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PSAL')
-            %if(wline ==43)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -814,10 +705,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PSAL_QC')
-            %if(wline ==44)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -827,10 +715,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PSAL_ADJUSTED')
-            %if(wline ==45)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -840,10 +725,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PSAL_ADJUSTED_QC')
-            %if(wline ==46)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -853,10 +735,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PSAL_ADJUSTED_ERROR')
-            %if(wline ==47)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -866,10 +745,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('PARAMETER')
-            %if(wline ==48)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -879,10 +755,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('SCIENTIFIC_CALIB_EQUATION')
-            %if(wline ==49)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -892,10 +765,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('SCIENTIFIC_CALIB_COEFFICIENT')
-            %if(wline ==50)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -905,11 +775,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('SCIENTIFIC_CALIB_COMMENT')
-            %if(wline ==51)
-                % ここから書き出し部分
+                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
                 for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -918,11 +785,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('SCIENTIFIC_CALIB_DATE')
-            %if(wline ==52)
-                % ここから書き出し部分
+         case ('SCIENTIFIC_CALIB_DATE')
+                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
                 for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -931,11 +795,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('HISTORY_INSTITUTION')
-            %if(wline ==53)
-                % ここから書き出し部分
+         case ('HISTORY_INSTITUTION')
+                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
                 for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -944,11 +805,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('HISTORY_STEP')
-            %if(wline ==54)
-                % ここから書き出し部分
+         case ('HISTORY_STEP')
+                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
                 for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -957,11 +815,8 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
-        case ('HISTORY_SOFTWARE')
-            %if(wline ==55)
-                % ここから書き出し部分
+         case ('HISTORY_SOFTWARE')
+                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
                 for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -970,10 +825,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_SOFTWARE_RELEASE')
-            %if(wline ==56)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -983,10 +835,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_REFERENCE')
-            %if(wline ==57)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -996,10 +845,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_DATE')
-            %if(wline ==58)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1009,10 +855,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_ACTION')
-            %if(wline ==59)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1022,10 +865,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_PARAMETER')
-            %if(wline ==60)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1035,10 +875,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-             %end
         case ('HISTORY_START_PRES')
-             %if(wline ==61)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1048,10 +885,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_STOP_PRES')
-            %if(wline ==62)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1061,10 +895,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_PREVIOUS_VALUE')
-            %if(wline ==62)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1074,10 +905,7 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
         case ('HISTORY_QCTEST')
-            %if(wline ==63)
                 % ここから書き出し部分
                 eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
                 % attributes
@@ -1087,14 +915,12 @@ for i1=1:size(finfo2.Variables,2)
                 % data
                 eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
                 % ここまでが書き出し部分
-                wline=wline+1;
-            %end
     end
 end
 
 %
-% グローバルアトリビュートは上の方法では読み書きが出来ないので
-% グローバルについては最後に追加する。
+% グローバルアトリビュートは上の方法では読み書きが出来ていないので
+% グローバルについては以下で追加する。
 %
 
 % file open
