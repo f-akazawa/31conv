@@ -91,18 +91,6 @@ ncid = netcdf.open([workpath tempfile],'NC_WRITE');
 % 定義モードにする
 netcdf.reDef(ncid);
 
-% グローバルアトリビュートの追加
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical profile');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ creation'));
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'Conventions','Argo-3.1 CF-1.6');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'featureType','trajectoryProfile');
-
-
 % リネームする関数のIDを取得
 renFuncID = netcdf.inqVarID(ncid,'DATA_TYPE');
 renFuncID2 = netcdf.inqVarID(ncid,'FORMAT_VERSION');
@@ -228,6 +216,7 @@ ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 % tempfileを再読み込みしてマニュアル順に並び替える
 %
 
+
 % ファイルポインタ取得
 finfo2 = ncinfo([workpath tempfile]);
 
@@ -256,31 +245,124 @@ netcdf.defDim(ncid2,'N_HISTORY',netcdf.getConstant('NC_UNLIMITED'));
 netcdf.close(ncid2);
 
 
-% Variables INST_REFERENCEだったらそこは書かない。（削除された変数なので）
 % write netcdf contents
 
 for i1=1:size(finfo2.Variables,2)
 
     % variables
-    ex1='';
+    ex2='';
     for i2=1:size(finfo2.Variables(i1).Dimensions,2)
-        ex1=[ex1 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
+        ex2=[ex2 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
     end
-    ex1=ex1(1:end-1);
-    
-    if strcmp(finfo2.Variables(i1).Name,'INST_REFERENCE') == 0
-          eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex1 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+    ex2=ex2(1:end-1);
 
-        % attributes
-        for i3=1:size(finfo2.Variables(i1).Attributes,2)
-            ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-        end
-    
-
-        % data
-        eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+    % ここから
+    switch (finfo2.Variables(i1).Name)
+        case ('DATA_TYPE')
+        case ('FORMAT_VERSION')
+        case ('HANDBOOK_VERSION')
+        case ('REFERENCE_DATE_TIME')
+        case ('PLATFORM_NUMBER')
+        case ('PROJECT_NAME')
+        case ('PI_NAME')
+        case ('STATION_PARAMETERS')
+        case ('CYCLE_NUMBER')
+        case ('DIRECTION')
+        case ('DATA_CENTRE')
+        case ('DATE_CREATION')
+        case ('DATE_UPDATE')
+        case ('DC_REFERENCE')
+        case ('DATA_STATE_INDICATOR')
+        case ('DATA_MODE')
+        case ('PLATFORM_TYPE')
+        case ('FLOAT_SERIAL_NO')
+        case ('FIRMWARE_VERSION')
+        case ('WMO_INST_TYPE')
+        case ('JULD')
+        case ('JULD_QC')
+        case ('JULD_LOCATION')
+        case ('LATITUDE')
+        case ('LONGITUDE')
+        case ('POSITION_QC')
+        case ('POSITIONING_SYSTEM')
+        case ('PROFILE_PRES_QC')
+        case ('PROFILE_TEMP_QC')
+        case ('PROFILE_PSAL_QC')
+        case ('VERTICAL_SAMPLING_SCHEME')
+        case ('CONFIG_MISSION_NUMBER')
+        case ('PRES')
+        case ('PRES_QC')
+        case ('PRES_ADJUSTED')
+        case ('PRES_ADJUSTED_QC')
+        case ('PRES_ADJUSTED_ERROR')
+        case ('TEMP')
+        case ('TEMP_QC')
+        case ('TEMP_ADJUSTED')
+        case ('TEMP_ADJUSTED_QC')
+        case ('TEMP_ADJUSTED_ERROR')
+        case ('PSAL')
+        case ('PSAL_QC')
+        case ('PSAL_ADJUSTED')
+        case ('PSAL_ADJUSTED_QC')
+        case ('PSAL_ADJUSTED_ERROR')
+        case ('PARAMETER')
+        case ('SCIENTIFIC_CALIB_EQUATION')
+        case ('SCIENTIFIC_CALIB_COEFFICIENT')
+        case ('SCIENTIFIC_CALIB_COMMENT')
+        case ('SCIENTIFIC_CALIB_DATE')
+        case ('HISTORY_INSTITUTION')
+        case ('HISTORY_STEP')
+        case ('HISTORY_SOFTWARE')
+        case ('HISTORY_SOFTWARE_RELEASE')
+        case ('HISTORY_REFERENCE')
+        case ('HISTORY_DATE')
+        case ('HISTORY_ACTION')
+        case ('HISTORY_PARAMETER')
+        case ('HISTORY_START_PRES')
+        case ('HISTORY_STOP_PRES')
+        case ('HISTORY_PREVIOUS_VALUE')
+        case ('HISTORY_QCTEST')
+        case ('PLATFORM_TYPE')
     end
+    % strcmp(finfo.Variables(i1).Name,'INST_REFERENCE') == 0
+    eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+
+    % attributes
+    for i3=1:size(finfo2.Variables(i1).Attributes,2)
+        ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+    end
+    
+    % data
+    eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+    % ここまでが書き出し部分
 end
+
+%
+% グローバルアトリビュートは上の方法では読み書きが出来ないので
+% グローバルについては最後に追加する。
+%
+
+% file open
+ncid = netcdf.open([workpath updatefile],'NC_WRITE');
+
+% 定義モードにする
+netcdf.reDef(ncid);
+
+% グローバルアトリビュートの追加
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical profile');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ creation'));
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'Conventions','Argo-3.1 CF-1.6');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'featureType','trajectoryProfile');
+
+% ファイル書き込み
+netcdf.endDef(ncid);
+netcdf.sync(ncid);
+netcdf.close(ncid);
 
 
 % デバッグプリント
