@@ -276,9 +276,7 @@ for i1=1:size(finfo2.Variables,2)
               'DATA_MODE',...
               'PLATFORM_TYPE',... % PLATFORM_TYPE以降は3.1から増えた部分、tempfile.ncでは最後に追記されているのでループカウンタが最後まで行ってしまう
               'FLOAT_SERIAL_NO',...
-              'FIRMWARE_VERSION',...
-              'VERTICAL_SAMPLING_SCHEME',...
-              'CONFIG_MISSION_NUMBER'}
+              'FIRMWARE_VERSION'}
 
             eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
             % attributes
@@ -314,7 +312,32 @@ for i1=1:size(finfo2.Variables,2)
               'PROFILE_PRES_QC',...
               'PROFILE_TEMP_QC',...
               'PROFILE_PSAL_QC',...
-              'PRES',...
+              'VERTICAL_SAMPLING_SCHEME',...
+              'CONFIG_MISSION_NUMBER'}
+
+            eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
+            % attributes
+            for i3=1:size(finfo2.Variables(i1).Attributes,2)
+                ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+            end
+            % data
+            eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
+    end
+end
+% 追加分は最後にあるのでループカウンタが最後まで行ってしまうので追加分より後に追加したい分のためにもう一回回す
+for i1=1:size(finfo2.Variables,2)
+
+    % variables
+    ex2='';
+    for i2=1:size(finfo2.Variables(i1).Dimensions,2)
+        ex2=[ex2 '''' finfo2.Variables(i1).Dimensions(i2).Name ''',' num2str(finfo2.Variables(i1).Dimensions(i2).Length) ','];
+    end
+    ex2=ex2(1:end-1);
+    
+    % ここから
+    switch (finfo2.Variables(i1).Name)
+
+        case{ 'PRES',...
               'PRES_QC',...
               'PRES_ADJUSTED',...
               'PRES_ADJUSTED_QC',...
