@@ -258,8 +258,28 @@ for i1=1:size(finfo2.Variables,2)
     
     % ここから
     switch (finfo2.Variables(i1).Name)
-        case ('DATA_TYPE')
-            % ここから書き出し部分
+        case {'DATA_TYPE',...
+              'FORMAT_VERSION',...
+              'HANDBOOK_VERSION',...
+              'REFERENCE_DATE_TIME',...
+              'PLATFORM_NUMBER',...
+              'PROJECT_NAME',...
+              'PI_NAME',...
+              'STATION_PARAMETERS',...
+              'CYCLE_NUMBER',...
+              'DIRECTION',...
+              'DATA_CENTRE',...
+              'DATE_CREATION',...
+              'DATE_UPDATE',...
+              'DC_REFERENCE',...
+              'DATA_STATE_INDICATOR',...
+              'DATA_MODE',...
+              'PLATFORM_TYPE',... % 3.1で追加された分ここから
+              'FLOAT_SERIAL_NO',...
+              'FIRMWARE_VERSION',...
+              'VERTICAL_SAMPLING_SCHEME',...
+              'CONFIG_MISSION_NUMBER'}
+
             eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
             % attributes
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
@@ -267,209 +287,6 @@ for i1=1:size(finfo2.Variables,2)
             end
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-            % ここまでが書き出し部分
-        case ('FORMAT_VERSION')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('HANDBOOK_VERSION')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('REFERENCE_DATE_TIME')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('PLATFORM_NUMBER')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('PROJECT_NAME')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('PI_NAME')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('STATION_PARAMETERS')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('CYCLE_NUMBER')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DIRECTION')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DATA_CENTRE')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DATE_CREATION')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DATE_UPDATE')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DC_REFERENCE')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DATA_STATE_INDICATOR')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('DATA_MODE')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-% 3.1で追加された部分
-        case ('PLATFORM_TYPE')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('FLOAT_SERIAL_NO')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('FIRMWARE_VERSION')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-         case ('VERTICAL_SAMPLING_SCHEME')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-        case ('CONFIG_MISSION_NUMBER')
-                % ここから書き出し部分
-                eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
-                % attributes
-                for i3=1:size(finfo2.Variables(i1).Attributes,2)
-                    ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                end
-                % data
-                eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
-                % ここまでが書き出し部分
-% 3.1で追加された部分ここまで
     end
 end
        
