@@ -106,6 +106,9 @@ netcdf.renameAtt(ncid,renFuncID4,'comment','long_name');
 netcdf.renameAtt(ncid,renFuncID5,'comment','long_name');
 netcdf.renameVar(ncid,renFuncID6,'SCIENTIFIC_CALIB_DATE');
 
+% €–Ú’Ç‰Á
+netcdf.putAtt(ncid,renFuncID,'conventions','Argo reference table 1');
+
 % €–Úíœ
 delFuncID = netcdf.inqVarID(ncid,'PRES');
 netcdf.delAtt(ncid,delFuncID,'comment');
