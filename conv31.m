@@ -184,7 +184,7 @@ ncwrite([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',sprintf('%-256s',vertical
 
 nccreate([workpath tempfile],'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
-ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','long_name','Float mission number of each profile');
+ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','long_name','Unique number denoting the missions performed by the float');
 ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
 ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','_FillValue',99999);
 ncwrite([workpath tempfile],'CONFIG_MISSION_NUMBER',1);
