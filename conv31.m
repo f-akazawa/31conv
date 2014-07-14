@@ -131,6 +131,21 @@ netcdf.delAtt(ncid,delFuncID8,'comment');
 delFuncID9 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
 netcdf.delAtt(ncid,delFuncID9,'comment');
 
+% SCIENTIFIC_CALIB_DATEはCALIBLATION_DATEをリネームして利用している
+% FillValueを下に追加したいので一度項目を削除してあとで順番に追加する
+delFuncID10 = netcdf.inqVarID(ncid,'SCIENTIFIC_CALIB_DATE');
+netcdf.delAtt(ncid,delFuncID10,'_FillValue');
+
+
+% 7.11ドラフトで追加になった項目を書き出し
+writeAttID1 = netcdf.inqVarID(ncid,'PRES_ADJUSTED_ERROR');
+netcdf.putAtt(ncid,writeAttID1,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+
+writeAttID2 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
+netcdf.putAtt(ncid,writeAttID2,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+
+writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
+netcdf.putAtt(ncid,writeAttID3,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
 
 % ファイル書き込み
@@ -206,6 +221,8 @@ ncwriteatt([workpath tempfile],'LONGITUDE','standard_name','longitude');
 ncwriteatt([workpath tempfile],'LONGITUDE','axis','X');
 
 ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','long_name','Date of calibration');
+ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','conventions','YYYYMMDDHHMISS');
+ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','_FillValue',' ');
 
 ncwriteatt([workpath tempfile],'PRES','standard_name','PRES');
 ncwriteatt([workpath tempfile],'TEMP','standard_name','TEMP');
