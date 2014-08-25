@@ -18,3 +18,4 @@ wmo_list_array = Array.new
         }
 wmolist.close
 
+end
