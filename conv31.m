@@ -165,6 +165,7 @@ platform_type=curs1.Data{1};
 float_serial_no=curs1.Data{2};
 firmware_version=curs1.Data{3};
 vertical_sampling_scheme=curs1.Data{4};
+%scienctific_calib_date=curs1.Data{5};
 
 % 3.1Ç≈ëùÇ¶ÇΩïœêîÇí«â¡ÅAàÍî‘â∫Ç…í«â¡Ç≥ÇÍÇƒÇµÇ‹Ç§ÅBÅB
 nccreate([workpath tempfile],'PLATFORM_TYPE',...
@@ -183,11 +184,11 @@ ncwriteatt([workpath tempfile],'FLOAT_SERIAL_NO','_FillValue',' ');
 ncwrite([workpath tempfile],'FLOAT_SERIAL_NO',sprintf('%-32s',float_serial_no)');
 
 nccreate([workpath tempfile],'FIRMWARE_VERSION',...
-    'Dimensions',{'STRING16','N_PROF'},...
+    'Dimensions',{'STRING32','N_PROF'},...
     'Datatype','char');
 ncwriteatt([workpath tempfile],'FIRMWARE_VERSION','long_name','Instrument firmware version');
 ncwriteatt([workpath tempfile],'FIRMWARE_VERSION','_FillValue',' ');
-ncwrite([workpath tempfile],'FIRMWARE_VERSION',sprintf('%-16s',firmware_version)');
+ncwrite([workpath tempfile],'FIRMWARE_VERSION',sprintf('%-32s',firmware_version)');
 
 nccreate([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',...
     'Dimensions',{'STRING256','N_PROF'},...
@@ -223,6 +224,7 @@ ncwriteatt([workpath tempfile],'LONGITUDE','axis','X');
 ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','long_name','Date of calibration');
 ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','conventions','YYYYMMDDHHMISS');
 ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','_FillValue',' ');
+%ncwrite([workpath tempfile],'SCIENTIFIC_CALIB_DATE',sprintf('%-14s',scienctific_calib_date)');
 
 ncwriteatt([workpath tempfile],'PRES','standard_name','PRES');
 ncwriteatt([workpath tempfile],'TEMP','standard_name','TEMP');
