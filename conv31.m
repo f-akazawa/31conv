@@ -155,6 +155,7 @@ netcdf.close(ncid);
 
 % 3.1で増えた変数を追加、DBからデータも読んでおく
 % データベース接続と変数への格納
+% DBのIPアドレス直打ちなので、サーバリプレイス後にも以下の行は変更が必要
 logintimeout(5);
 conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.22.43:1521:');
 ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') , nvl(sensor_caldate,'' '') from float_info,sensor_axis_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and param_id=1']);
