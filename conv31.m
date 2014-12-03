@@ -16,6 +16,12 @@ workpath = '/home/argo/akazawa/';
 % 見た目の順番が違うだけなのでmachine readableとしてはこのファイルでも良い
 tempfile = 'tempfile.nc';
 
+% nameの先頭がRファイルだったら変換対象外なのでプログラム終了する
+if strncmpi(name,'R',1) == 1
+    exit(1);
+end
+
+
 % 最終出力ファイル名を作る (元ファイル_NEW.nc)
 updatefile = strcat(name,'_NEW',ext);
 
