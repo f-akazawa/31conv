@@ -128,14 +128,18 @@ delFuncID5 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.delAtt(ncid,delFuncID5,'comment');
 
 % プロファイルによってはPSALが無いものがあるので以下は存在チェック
-%%if(netcdf.inqVarID(ndid,'PSAL') != NaN)
+try 
+  existID = netcdf.inqVarID(ndid,'PSAL');
+catch exception
+    %% PSALがなかったらなにもしないでスルー
+end
     delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
     netcdf.delAtt(ncid,delFuncID6,'comment');
     delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID8,'comment');
-%%else
+end
     
 %%end
 
