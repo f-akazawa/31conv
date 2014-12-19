@@ -446,10 +446,14 @@ exit(0);
 end
 
 function ncid = exist_PSALcheck(ncid)
+try
     delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
     netcdf.delAtt(ncid,delFuncID6,'comment');
     delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID8,'comment');
+catch err
+    return;
+end
 end
