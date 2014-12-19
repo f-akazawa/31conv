@@ -1,5 +1,5 @@
 function conv31(filename)
-try
+
 % 作業ディレクトリの場所、tempfile.ncはここに作る
 workpath = '/home/argo/akazawa/';
 
@@ -129,7 +129,7 @@ netcdf.delAtt(ncid,delFuncID5,'comment');
 
 % プロファイルによってはPSALが無いものがあるので以下は存在チェック
 % ここだけ別のfunctionに飛ばす
-exist_PSALcheck(ncid);
+ncid = exist_PSALcheck(ncid);
   
 
 
@@ -445,11 +445,11 @@ netcdf.close(ncid);
 exit(0);
 end
 
-function exist_PSALcheck(ncid)
+function ncid = exist_PSALcheck(ncid)
     delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
     netcdf.delAtt(ncid,delFuncID6,'comment');
     delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID8,'comment');
-return
+end
