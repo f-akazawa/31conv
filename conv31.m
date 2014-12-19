@@ -140,14 +140,12 @@ netcdf.delAtt(ncid,delFuncID9,'_FillValue');
 
 
 % 7.11ドラフトで追加になった項目を書き出し
+% PSAL_ADJUSTED_ERRORも追加なのだがPSALがないデータの場合は別関数(exist_PSALcheck)に移動
 writeAttID1 = netcdf.inqVarID(ncid,'PRES_ADJUSTED_ERROR');
 netcdf.putAtt(ncid,writeAttID1,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
 writeAttID2 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.putAtt(ncid,writeAttID2,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
-
-writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
-netcdf.putAtt(ncid,writeAttID3,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
 
 % ファイル書き込み
@@ -453,6 +451,10 @@ try
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID8,'comment');
+    
+    writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
+    netcdf.putAtt(ncid,writeAttID3,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+
 catch err
     return;
 end
