@@ -1,5 +1,5 @@
 function conv31(filename)
-
+try
 % 作業ディレクトリの場所、tempfile.ncはここに作る
 workpath = '/home/argo/akazawa/';
 
@@ -128,17 +128,10 @@ delFuncID5 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.delAtt(ncid,delFuncID5,'comment');
 
 % プロファイルによってはPSALが無いものがあるので以下は存在チェック
-    function
-    try 
-    delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
-    netcdf.delAtt(ncid,delFuncID6,'comment');
-    delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
-    netcdf.delAtt(ncid,delFuncID7,'comment');
-    delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
-    netcdf.delAtt(ncid,delFuncID8,'comment');
-    catch err
-% PSALがない場合はスルー
-    end
+% ここだけ別のfunctionに飛ばす
+exist_PSALcheck(ncid);
+  
+
 
 % SCIENTIFIC_CALIB_DATEはCALIBLATION_DATEをリネームして利用している
 % FillValueを下に追加したいので一度項目を削除してあとで順番に追加する
@@ -450,3 +443,13 @@ netcdf.close(ncid);
 
 % Matlab自体も終了させる（自動起動スクリプト時に必要）
 exit(0);
+end
+
+function exist_PSALcheck(ncid)
+    delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
+    netcdf.delAtt(ncid,delFuncID6,'comment');
+    delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
+    netcdf.delAtt(ncid,delFuncID7,'comment');
+    delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
+    netcdf.delAtt(ncid,delFuncID8,'comment');
+end
