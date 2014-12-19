@@ -130,16 +130,16 @@ delFuncID6 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.delAtt(ncid,delFuncID6,'comment');
 
 % プロファイルによってはPSALが無いものがあるので以下は存在チェック
-%if(netcdf.inqVarID(ndid,'PSAL') != NaN)
+%%if(netcdf.inqVarID(ndid,'PSAL') != NaN)
     delFuncID7 = netcdf.inqVarID(ncid,'PSAL');
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
     netcdf.delAtt(ncid,delFuncID8,'comment');
     delFuncID9 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID9,'comment');
-%else
+%%else
     
-%end
+%%end
 
 % SCIENTIFIC_CALIB_DATEはCALIBLATION_DATEをリネームして利用している
 % FillValueを下に追加したいので一度項目を削除してあとで順番に追加する
