@@ -452,4 +452,4 @@ function exist_PSALcheck(ncid)
     netcdf.delAtt(ncid,delFuncID7,'comment');
     delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.delAtt(ncid,delFuncID8,'comment');
-end
+return
