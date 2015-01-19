@@ -311,7 +311,7 @@ for i1=1:size(finfo2.Variables,2)
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
                 if( strcmp(finfo2.Variables(i1).Name , DATE_CREATION) == 1) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
-                %if(finfo2.Variables(i1).Name == DATE_UPDATE) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
+                if( strcmp(finfo2.Variables(i1).Name , DATE_UPDATE) == 1) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
 
             end
             % data
@@ -429,7 +429,8 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical 
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history のフォーマット変更
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
+%netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',date_creation);
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
