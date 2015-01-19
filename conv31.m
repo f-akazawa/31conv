@@ -297,8 +297,8 @@ for i1=1:size(finfo2.Variables,2)
               'CYCLE_NUMBER',...
               'DIRECTION',...
               'DATA_CENTRE',...
-              'DATE_CREATION',...
-              'DATE_UPDATE',...
+              'DATE_CREATION',... % global attributesのhistoryに書く必要あり
+              'DATE_UPDATE',... % global attributesのhistoryに書く必要あり
               'DC_REFERENCE',...
               'DATA_STATE_INDICATOR',...
               'DATA_MODE',...
@@ -310,13 +310,16 @@ for i1=1:size(finfo2.Variables,2)
             % attributes
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
+                if(finfo2.Variables(i1).Attributes(i3).Name == DATE_CREATION) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
+                if(finfo2.Variables(i1).Attributes(i3).Name == DATE_UPDATE) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
+
             end
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
     end
 end
        
-% 追加分は最後にあるのでループカウンタが最後まで行ってしまうので追加分より後に追加したい分のためにもう一回回す
+% 追加分は最後にあるのでループカウンタが最後まで行ってしまうので追加分より後に追加したい分のためにもう一回回す（2回め）
 for i1=1:size(finfo2.Variables,2)
 
     % variables
@@ -352,7 +355,7 @@ for i1=1:size(finfo2.Variables,2)
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
     end
 end
-% 追加分は最後にあるのでループカウンタが最後まで行ってしまうので追加分より後に追加したい分のためにもう一回回す
+% 追加分は最後にあるのでループカウンタが最後まで行ってしまうので追加分より後に追加したい分のためにもう一回回す（3回め）
 for i1=1:size(finfo2.Variables,2)
 
     % variables
@@ -413,6 +416,8 @@ end
 % グローバルについては以下で追加する。
 %
 
+% historyにdate_creation と date_updateを書く、その上でこのプログラム実行時間をdata_updateに追記する
+
 % file open
 ncid = netcdf.open([workpath updatefile],'NC_WRITE');
 
@@ -423,7 +428,8 @@ netcdf.reDef(ncid);
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical profile');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ creation'));
+% history のフォーマット変更
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
