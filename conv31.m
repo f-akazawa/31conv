@@ -434,7 +434,7 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history のフォーマット変更
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(date_creation,'yyyy-mm-ddTHH:MM:SSZ creation'));
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',date_creation);
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
