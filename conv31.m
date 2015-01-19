@@ -311,7 +311,7 @@ for i1=1:size(finfo2.Variables,2)
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
                 if(finfo2.Variables(i1).Name == DATE_CREATION) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
-                if(finfo2.Variables(i1).Name == DATE_UPDATE) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
+                %if(finfo2.Variables(i1).Name == DATE_UPDATE) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
 
             end
             % data
