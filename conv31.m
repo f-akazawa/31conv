@@ -316,8 +316,6 @@ for i1=1:size(finfo2.Variables,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
                 if( strcmp(finfo2.Variables(i1).Name , DATE_CREATION) == 1) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
                 if( strcmp(finfo2.Variables(i1).Name , DATE_UPDATE) == 1) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
-disp(date_creation);
-disp(date_update);
             end
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
@@ -452,7 +450,7 @@ netcdf.close(ncid);
 %ncdisp(tempfile);
 
 % Matlab自体も終了させる（自動起動スクリプト時に必要）
-exit(0);
+%exit(0);
 end
 
 function ncid = exist_PSALcheck(ncid)
