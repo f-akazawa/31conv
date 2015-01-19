@@ -12,6 +12,10 @@ workpath = '/home/argo/akazawa/';
 % pathstrの後ろに区切りスラッシュを入れる
 % origpath = strcat(pathstr,'/');
 
+% 書き込みで使うグローバル変数
+global date_creation;
+global date_update;
+
 % 中間ファイルを作る
 % 見た目の順番が違うだけなのでmachine readableとしてはこのファイルでも良い
 tempfile = 'tempfile.nc';
