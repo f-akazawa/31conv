@@ -443,7 +443,7 @@ netcdf.close(ncid);
 
 
 % デバッグプリント
-ncdisp(tempfile);
+%ncdisp(tempfile);
 
 % Matlab自体も終了させる（自動起動スクリプト時に必要）
 exit(0);
