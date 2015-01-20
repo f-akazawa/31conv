@@ -470,7 +470,7 @@ end
 function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
     % format creation date
     dc = reshape(DATE_CREATION,1,[]);
-    print_hist = srtcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
+    print_hist = srtcat(dc(1:4),`-`,dc(5:6),`-`,dc(7:8),`T`,dc(9:10),`:`,dc(11:12),`:`,dc(13:14),`Z creation;`);
     
     % format update date
     du = reshape(DATE_UPDATE,1,[]);
