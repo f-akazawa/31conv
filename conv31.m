@@ -310,8 +310,6 @@ for i1=1:size(finfo2.Variables,2)
             % attributes
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
-                if( strcmp(finfo2.Variables(i1).Name , DATE_CREATION) == 1) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
-                %if( strcmp(finfo2.Variables(i1).Name , DATE_UPDATE) == 1) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
             end
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
@@ -428,8 +426,11 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical 
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history のフォーマット変更
+print_hist = formatHistory(DATE_CREATION,DATE_UPDATE);
+
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',date_creation);
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',print_hist);
+
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
@@ -464,4 +465,17 @@ try
 catch err
     return;
 end
+end
+
+function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
+    % format creation date
+    dc = reshape(DATE_CREATION,1,[]);
+    print_hist = srtcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
+    
+    % format update date
+    du = reshape(DATE_UPDATE,1,[]);
+    print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
+    
+    % add this tool execute date(UPDATE)
+    print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
 end
