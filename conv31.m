@@ -1,44 +1,44 @@
 function conv31(filename)
 
-% ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚ÌêŠAtempfile.nc‚Í‚±‚±‚Éì‚é
+% ï¿½ï¿½Æƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ÌêŠï¿½Atempfile.ncï¿½Í‚ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½
 workpath = '/home/argo/akazawa/';
 
-% ˆø”‚©‚çƒtƒ@ƒCƒ‹ƒpƒXAƒtƒ@ƒCƒ‹–¼‚ğ”²‚«o‚µ
-% pathstr path‚Ì•”•ª
-% name Šg’£q‚ğœ‚¢‚½ƒtƒ@ƒCƒ‹–¼•”•ª
-% ext Šg’£q
+% ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½pï¿½Xï¿½Aï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ğ”²‚ï¿½ï¿½oï¿½ï¿½
+% pathstr pathï¿½Ì•ï¿½ï¿½ï¿½
+% name ï¿½gï¿½ï¿½ï¿½qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+% ext ï¿½gï¿½ï¿½ï¿½q
 [pathstr,name,ext]=fileparts(filename);
 
-% pathstr‚ÌŒã‚ë‚É‹æØ‚èƒXƒ‰ƒbƒVƒ…‚ğ“ü‚ê‚é
+% pathstrï¿½ÌŒï¿½ï¿½É‹ï¿½Ø‚ï¿½Xï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 % origpath = strcat(pathstr,'/');
 
-% ’†ŠÔƒtƒ@ƒCƒ‹‚ğì‚é
-% Œ©‚½–Ú‚Ì‡”Ô‚ªˆá‚¤‚¾‚¯‚È‚Ì‚Åmachine readable‚Æ‚µ‚Ä‚Í‚±‚Ìƒtƒ@ƒCƒ‹‚Å‚à—Ç‚¢
+% ï¿½ï¿½ï¿½Ôƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+% ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚Ìï¿½ï¿½Ô‚ï¿½ï¿½á‚¤ï¿½ï¿½ï¿½ï¿½ï¿½È‚Ì‚ï¿½machine readableï¿½Æ‚ï¿½ï¿½Ä‚Í‚ï¿½ï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ç‚ï¿½
 tempfile = 'tempfile.nc';
 
-% name‚Ìæ“ª‚ªRƒtƒ@ƒCƒ‹‚¾‚Á‚½‚ç•ÏŠ·‘ÎÛŠO‚È‚Ì‚ÅƒvƒƒOƒ‰ƒ€I—¹‚·‚é
+% nameï¿½Ìæ“ªï¿½ï¿½Rï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏŠï¿½ï¿½ÎÛŠOï¿½È‚Ì‚Åƒvï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 if strncmpi(name,'R',1) == 1
     exit(1);
 end
 
 
-% ÅIo—Íƒtƒ@ƒCƒ‹–¼‚ğì‚é (Œ³ƒtƒ@ƒCƒ‹_NEW.nc)
+% ï¿½ÅIï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½_NEW.nc)
 updatefile = strcat(name,'_NEW',ext);
 
-% DB‚©‚ç“Ç‚Ş‚Ì‚É•K—v‚ÈWMO”Ô†‚ğƒtƒ@ƒCƒ‹–¼‚©‚ç”²‚«o‚·BiDƒtƒ@ƒCƒ‹‚Ì‚İ•ÏŠ·‘ÎÛj
+% DBï¿½ï¿½ï¿½ï¿½Ç‚Ş‚Ì‚É•Kï¿½vï¿½ï¿½WMOï¿½Ôï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç”²ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Bï¿½iDï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì‚İ•ÏŠï¿½ï¿½ÎÛj
 wmo_no = strsplit(name,{'D','_'},'CollapseDelimiters',true);
 wmo = wmo_no{2};
 
-% o—Íƒtƒ@ƒCƒ‹‚ÌƒfƒBƒŒƒNƒgƒŠ(ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚ÉWMO”Ô†‚Åì¬j
-% ì¬‚ÍƒVƒFƒ‹ƒXƒNƒŠƒvƒg‚Å‚â‚é—\’èEEE
+% ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½(ï¿½ï¿½Æƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½WMOï¿½Ôï¿½ï¿½Åì¬ï¿½j
+% ï¿½ì¬ï¿½ÍƒVï¿½Fï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½Å‚ï¿½ï¿½\ï¿½ï¿½Eï¿½Eï¿½E
 % outpath = strcat(workpath,wmo,'/');
 
 
-% ˆÈ‰º‚©‚çˆ—–{‘Ì•”•ª
-% ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^æ“¾
+% ï¿½È‰ï¿½ï¿½ï¿½ï¿½çˆï¿½ï¿½ï¿½{ï¿½Ì•ï¿½ï¿½ï¿½
+% ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½æ“¾
 finfo = ncinfo(filename);
 
-% netcdf “Ç‚İ‚İ
+% netcdf ï¿½Ç‚İï¿½ï¿½ï¿½
 % dimensions
 for i1=1:size(finfo.Dimensions,2)
     eval([finfo.Dimensions(i1).Name '=finfo.Dimensions(i1).Length;']);
@@ -49,8 +49,8 @@ for i1=1:size(finfo.Variables,2)
     eval([finfo.Variables(i1).Name '=ncread([filename],finfo.Variables(i1).Name);']);
 end
 
-% “Ç‚İ‚ñ‚¾‚Ì‚Å‘‚«‚¾‚·
-% INST_REFERENCE‚Ííœ‚³‚ê‚½•Ï”‚È‚Ì‚ÅA‚»‚±‚¾‚¯‚Í‘‚©‚È‚¢‚æ‚¤‚É‚µ‚Ä‘‚«‚¾‚·
+% ï¿½Ç‚İï¿½ï¿½ñ‚¾‚Ì‚Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+% INST_REFERENCEï¿½Ííœï¿½ï¿½ï¿½ê‚½ï¿½Ïï¿½ï¿½È‚Ì‚ÅAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 ncid1 = netcdf.create([workpath tempfile],'NC_CLOBBER');
 for i1=1:size(finfo.Dimensions,2)
@@ -62,7 +62,7 @@ netcdf.defDim(ncid1,'N_HISTORY',netcdf.getConstant('NC_UNLIMITED'));
 netcdf.close(ncid1);
 
 
-% Variables INST_REFERENCE‚¾‚Á‚½‚ç‚»‚±‚Í‘‚©‚È‚¢Biíœ‚³‚ê‚½•Ï”‚È‚Ì‚Åj
+% Variables INST_REFERENCEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚»ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Bï¿½iï¿½íœï¿½ï¿½ï¿½ê‚½ï¿½Ïï¿½ï¿½È‚Ì‚Åj
 % write netcdf contents
 
 for i1=1:size(finfo.Variables,2)
@@ -94,17 +94,17 @@ end
 % file open
 ncid = netcdf.open([workpath tempfile],'NC_WRITE');
 
-% ’è‹`ƒ‚[ƒh‚É‚·‚é
+% ï¿½ï¿½`ï¿½ï¿½ï¿½[ï¿½hï¿½É‚ï¿½ï¿½ï¿½
 netcdf.reDef(ncid);
 
-% ƒŠƒl[ƒ€‚·‚éŠÖ”‚ÌID‚ğæ“¾
+% ï¿½ï¿½ï¿½lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½æ“¾
 renFuncID = netcdf.inqVarID(ncid,'DATA_TYPE');
 renFuncID2 = netcdf.inqVarID(ncid,'FORMAT_VERSION');
 renFuncID3 = netcdf.inqVarID(ncid,'HANDBOOK_VERSION');
 renFuncID4 = netcdf.inqVarID(ncid,'REFERENCE_DATE_TIME');
 renFuncID5 = netcdf.inqVarID(ncid,'DATE_CREATION');
 renFuncID6 = netcdf.inqVarID(ncid,'CALIBRATION_DATE');
-% ƒŠƒl[ƒ€
+% ï¿½ï¿½ï¿½lï¿½[ï¿½ï¿½
 netcdf.renameAtt(ncid,renFuncID,'comment','long_name');
 netcdf.renameAtt(ncid,renFuncID2,'comment','long_name');
 netcdf.renameAtt(ncid,renFuncID3,'comment','long_name');
@@ -112,10 +112,10 @@ netcdf.renameAtt(ncid,renFuncID4,'comment','long_name');
 netcdf.renameAtt(ncid,renFuncID5,'comment','long_name');
 netcdf.renameVar(ncid,renFuncID6,'SCIENTIFIC_CALIB_DATE');
 
-% €–Ú’Ç‰Á
+% ï¿½ï¿½ï¿½Ú’Ç‰ï¿½
 netcdf.putAtt(ncid,renFuncID,'conventions','Argo reference table 1');
 
-% €–Úíœ
+% ï¿½ï¿½ï¿½Úíœ
 delFuncID = netcdf.inqVarID(ncid,'PRES');
 netcdf.delAtt(ncid,delFuncID,'comment');
 delFuncID2 = netcdf.inqVarID(ncid,'PRES_ADJUSTED');
@@ -127,20 +127,20 @@ netcdf.delAtt(ncid,delFuncID4,'comment');
 delFuncID5 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.delAtt(ncid,delFuncID5,'comment');
 
-% ƒvƒƒtƒ@ƒCƒ‹‚É‚æ‚Á‚Ä‚ÍPSAL‚ª–³‚¢‚à‚Ì‚ª‚ ‚é‚Ì‚ÅˆÈ‰º‚Í‘¶İƒ`ƒFƒbƒN
-% ‚±‚±‚¾‚¯•Ê‚Ìfunction‚É”ò‚Î‚·
+% ï¿½vï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½Ä‚ï¿½PSALï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ÅˆÈ‰ï¿½ï¿½Í‘ï¿½ï¿½İƒ`ï¿½Fï¿½bï¿½N
+% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ï¿½functionï¿½É”ï¿½Î‚ï¿½
 ncid = exist_PSALcheck(ncid);
   
 
 
-% SCIENTIFIC_CALIB_DATE‚ÍCALIBLATION_DATE‚ğƒŠƒl[ƒ€‚µ‚Ä—˜—p‚µ‚Ä‚¢‚é
-% FillValue‚ğ‰º‚É’Ç‰Á‚µ‚½‚¢‚Ì‚Åˆê“x€–Ú‚ğíœ‚µ‚Ä‚ ‚Æ‚Å‡”Ô‚É’Ç‰Á‚·‚é
+% SCIENTIFIC_CALIB_DATEï¿½ï¿½CALIBLATION_DATEï¿½ï¿½ï¿½ï¿½ï¿½lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ä—ï¿½ï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+% FillValueï¿½ï¿½ï¿½ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Åˆï¿½xï¿½ï¿½ï¿½Ú‚ï¿½ï¿½íœï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Æ‚Åï¿½ï¿½Ô‚É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
 delFuncID9 = netcdf.inqVarID(ncid,'SCIENTIFIC_CALIB_DATE');
 netcdf.delAtt(ncid,delFuncID9,'_FillValue');
 
 
-% 7.11ƒhƒ‰ƒtƒg‚Å’Ç‰Á‚É‚È‚Á‚½€–Ú‚ğ‘‚«o‚µ
-% PSAL_ADJUSTED_ERROR‚à’Ç‰Á‚È‚Ì‚¾‚ªPSAL‚ª‚È‚¢ƒf[ƒ^‚Ìê‡‚Í•ÊŠÖ”(exist_PSALcheck)‚ÉˆÚ“®
+% 7.11ï¿½hï¿½ï¿½ï¿½tï¿½gï¿½Å’Ç‰ï¿½ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
+% PSAL_ADJUSTED_ERRORï¿½ï¿½ï¿½Ç‰ï¿½ï¿½È‚Ì‚ï¿½ï¿½ï¿½PSALï¿½ï¿½ï¿½È‚ï¿½ï¿½fï¿½[ï¿½^ï¿½Ìê‡ï¿½Í•ÊŠÖï¿½(exist_PSALcheck)ï¿½ÉˆÚ“ï¿½
 writeAttID1 = netcdf.inqVarID(ncid,'PRES_ADJUSTED_ERROR');
 netcdf.putAtt(ncid,writeAttID1,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
@@ -148,15 +148,15 @@ writeAttID2 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.putAtt(ncid,writeAttID2,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
 
-% ƒtƒ@ƒCƒ‹‘‚«‚İ
+% ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 netcdf.endDef(ncid);
 netcdf.sync(ncid);
 netcdf.close(ncid);
 
-% 3.1‚Å‘‚¦‚½•Ï”‚ğ’Ç‰ÁADB‚©‚çƒf[ƒ^‚à“Ç‚ñ‚Å‚¨‚­
-% ƒf[ƒ^ƒx[ƒXÚ‘±‚Æ•Ï”‚Ö‚ÌŠi”[
-% DB‚ÌIPƒAƒhƒŒƒX’¼‘Å‚¿‚È‚Ì‚ÅAƒT[ƒoƒŠƒvƒŒƒCƒXŒã‚É‚àˆÈ‰º‚Ìs‚Í•ÏX‚ª•K—v
-% ˆø‰z‚µŒãA“®‚©‚»‚¤‚Æ‚µ‚½‚çSQL‚Ì\•¶•Ï‚í‚Á‚Ä‚½A’†“‡‚³‚ñ‚ÉŒ©‚Ä‚à‚ç‚Á‚ÄC³
+% 3.1ï¿½Å‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ADBï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Ç‚ï¿½Å‚ï¿½ï¿½ï¿½
+% ï¿½fï¿½[ï¿½^ï¿½xï¿½[ï¿½Xï¿½Ú‘ï¿½ï¿½Æ•Ïï¿½ï¿½Ö‚ÌŠiï¿½[
+% DBï¿½ï¿½IPï¿½Aï¿½hï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚Ì‚ÅAï¿½Tï¿½[ï¿½oï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½Xï¿½ï¿½É‚ï¿½ï¿½È‰ï¿½ï¿½Ìsï¿½Í•ÏXï¿½ï¿½ï¿½Kï¿½v
+% ï¿½ï¿½zï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½SQLï¿½Ì\ï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŒï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ÄCï¿½ï¿½
 logintimeout(5);
 conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.22.43:1521:');
 %ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') , nvl(sensor_caldate,'' '') from float_info,sensor_axis_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and param_id=1']);
@@ -170,7 +170,7 @@ firmware_version=curs1.Data{3};
 vertical_sampling_scheme=curs1.Data{4};
 %scienctific_calib_date=curs1.Data{5};
 
-% 3.1‚Å‘‚¦‚½•Ï”‚ğ’Ç‰ÁAˆê”Ô‰º‚É’Ç‰Á‚³‚ê‚Ä‚µ‚Ü‚¤BB
+% 3.1ï¿½Å‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½ï¿½ï¿½Ç‰ï¿½ï¿½Aï¿½ï¿½Ô‰ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½B
 nccreate([workpath tempfile],'PLATFORM_TYPE',...
     'Dimensions',{'STRING32','N_PROF'},...
     'Datatype','char');
@@ -211,7 +211,7 @@ ncwrite([workpath tempfile],'CONFIG_MISSION_NUMBER',1);
 % format_version 2.2 > 3.1
 ncwrite([workpath tempfile],'FORMAT_VERSION','3.1');
 
-% 3.1‚Å’Ç‰Á‚É‚È‚Á‚½ƒAƒgƒŠƒrƒ…[ƒg‚ğ’Ç‰Á
+% 3.1ï¿½Å’Ç‰ï¿½ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½Aï¿½gï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½Ç‰ï¿½
 ncwriteatt([workpath tempfile],'JULD','standard_name','time');
 ncwriteatt([workpath tempfile],'JULD','resolution','X');
 ncwriteatt([workpath tempfile],'JULD','axis','T');
@@ -238,15 +238,15 @@ ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
 %
-% tempfile‚ğÄ“Ç‚İ‚İ‚µ‚Äƒ}ƒjƒ…ƒAƒ‹‡‚É•À‚Ñ‘Ö‚¦‚é
+% tempfileï¿½ï¿½ï¿½Ä“Ç‚İï¿½ï¿½İ‚ï¿½ï¿½Äƒ}ï¿½jï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½É•ï¿½ï¿½Ñ‘Ö‚ï¿½ï¿½ï¿½
 %
 
 
-% ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^æ“¾
+% ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½æ“¾
 finfo2 = ncinfo([workpath tempfile]);
 
-% ˆÈ‰ºtempfile‘‚«o‚µ‚Æ‘S‚­“¯‚¶
-% netcdf “Ç‚İ‚İ
+% ï¿½È‰ï¿½tempfileï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Æ‘Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+% netcdf ï¿½Ç‚İï¿½ï¿½ï¿½
 % dimensions
 for i1=1:size(finfo2.Dimensions,2)
     eval([finfo2.Dimensions(i1).Name '=finfo2.Dimensions(i1).Length;']);
@@ -257,8 +257,8 @@ for i1=1:size(finfo2.Variables,2)
     eval([finfo2.Variables(i1).Name '=ncread([workpath tempfile],finfo2.Variables(i1).Name);']);
 end
 
-% “Ç‚İ‚ñ‚¾‚Ì‚Å‘‚«‚¾‚·
-% INST_REFERENCE‚Ííœ‚³‚ê‚½•Ï”‚È‚Ì‚ÅA‚»‚±‚¾‚¯‚Í‘‚©‚È‚¢‚æ‚¤‚É‚µ‚Ä‘‚«‚¾‚·
+% ï¿½Ç‚İï¿½ï¿½ñ‚¾‚Ì‚Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+% INST_REFERENCEï¿½Ííœï¿½ï¿½ï¿½ê‚½ï¿½Ïï¿½ï¿½È‚Ì‚ÅAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 ncid2 = netcdf.create([workpath updatefile],'NC_NOCLOBBER');
 for i1=1:size(finfo2.Dimensions,2)
@@ -271,9 +271,9 @@ netcdf.close(ncid2);
 
 
 % write netcdf contents
-% ’Ç‰Áƒpƒ‰ƒ[ƒ^‚ğ“r’†‚É’Ç‰Á‚³‚¹‚é‚½‚ß‚É“s‡3‰ñƒ‹[ƒv‚³‚¹‚Ä‚¢‚é
-% case•¶‚Ì‡”Ô‚É‘‚«‚¾‚³‚ê‚éB
-% ‚à‚¤­‚µƒXƒ}[ƒg‚É‘‚¯‚È‚¢‚à‚Ì‚©H
+% ï¿½Ç‰ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½rï¿½ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚É“sï¿½ï¿½3ï¿½ñƒ‹[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+% caseï¿½ï¿½ï¿½Ìï¿½ï¿½Ô‚Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½}ï¿½[ï¿½gï¿½Éï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½H
 
 for i1=1:size(finfo2.Variables,2)
 
@@ -284,7 +284,7 @@ for i1=1:size(finfo2.Variables,2)
     end
     ex2=ex2(1:end-1);
     
-    % ‚±‚±‚©‚ç
+    % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     switch (finfo2.Variables(i1).Name)
         case {'DATA_TYPE',...
               'FORMAT_VERSION',...
@@ -297,12 +297,12 @@ for i1=1:size(finfo2.Variables,2)
               'CYCLE_NUMBER',...
               'DIRECTION',...
               'DATA_CENTRE',...
-              'DATE_CREATION',... % global attributes‚Ìhistory‚É‘‚­•K—v‚ ‚è
-              'DATE_UPDATE',... % global attributes‚Ìhistory‚É‘‚­•K—v‚ ‚è
+              'DATE_CREATION',... % global attributesï¿½ï¿½historyï¿½Éï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½
+              'DATE_UPDATE',... % global attributesï¿½ï¿½historyï¿½Éï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½
               'DC_REFERENCE',...
               'DATA_STATE_INDICATOR',...
               'DATA_MODE',...
-              'PLATFORM_TYPE',... % PLATFORM_TYPEˆÈ~‚Í3.1‚©‚ç‘‚¦‚½•”•ªAtempfile.nc‚Å‚ÍÅŒã‚É’Ç‹L‚³‚ê‚Ä‚¢‚é‚Ì‚Åƒ‹[ƒvƒJƒEƒ“ƒ^‚ªÅŒã‚Ü‚Ås‚Á‚Ä‚µ‚Ü‚¤
+              'PLATFORM_TYPE',... % PLATFORM_TYPEï¿½È~ï¿½ï¿½3.1ï¿½ï¿½ï¿½ç‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Atempfile.ncï¿½Å‚ÍÅŒï¿½É’Ç‹Lï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚Åƒï¿½ï¿½[ï¿½vï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ÅŒï¿½Ü‚Åsï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½
               'FLOAT_SERIAL_NO',...
               'FIRMWARE_VERSION'}
 
@@ -316,7 +316,7 @@ for i1=1:size(finfo2.Variables,2)
     end
 end
        
-% ’Ç‰Á•ª‚ÍÅŒã‚É‚ ‚é‚Ì‚Åƒ‹[ƒvƒJƒEƒ“ƒ^‚ªÅŒã‚Ü‚Ås‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Å’Ç‰Á•ª‚æ‚èŒã‚É’Ç‰Á‚µ‚½‚¢•ª‚Ì‚½‚ß‚É‚à‚¤ˆê‰ñ‰ñ‚·i2‰ñ‚ßj
+% ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ÍÅŒï¿½É‚ï¿½ï¿½ï¿½Ì‚Åƒï¿½ï¿½[ï¿½vï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ÅŒï¿½Ü‚Åsï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½Ì‚Å’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚·i2ï¿½ï¿½ßj
 for i1=1:size(finfo2.Variables,2)
 
     % variables
@@ -326,7 +326,7 @@ for i1=1:size(finfo2.Variables,2)
     end
     ex2=ex2(1:end-1);
     
-    % ‚±‚±‚©‚ç
+    % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     switch (finfo2.Variables(i1).Name)
         
         case {'WMO_INST_TYPE',...
@@ -340,7 +340,7 @@ for i1=1:size(finfo2.Variables,2)
               'PROFILE_PRES_QC',...
               'PROFILE_TEMP_QC',...
               'PROFILE_PSAL_QC',...
-              'VERTICAL_SAMPLING_SCHEME',... % 3,1‚©‚ç‘‚¦‚½•”•ª
+              'VERTICAL_SAMPLING_SCHEME',... % 3,1ï¿½ï¿½ï¿½ç‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
               'CONFIG_MISSION_NUMBER'}
 
             eval(['nccreate(updatefile,finfo2.Variables(i1).Name,''Dimensions'',{' ex2 '},''Datatype'',finfo2.Variables(i1).Datatype,''Format'',''classic'');'])
@@ -352,7 +352,7 @@ for i1=1:size(finfo2.Variables,2)
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
     end
 end
-% ’Ç‰Á•ª‚ÍÅŒã‚É‚ ‚é‚Ì‚Åƒ‹[ƒvƒJƒEƒ“ƒ^‚ªÅŒã‚Ü‚Ås‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Å’Ç‰Á•ª‚æ‚èŒã‚É’Ç‰Á‚µ‚½‚¢•ª‚Ì‚½‚ß‚É‚à‚¤ˆê‰ñ‰ñ‚·i3‰ñ‚ßj
+% ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ÍÅŒï¿½É‚ï¿½ï¿½ï¿½Ì‚Åƒï¿½ï¿½[ï¿½vï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ÅŒï¿½Ü‚Åsï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½Ì‚Å’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚·i3ï¿½ï¿½ßj
 for i1=1:size(finfo2.Variables,2)
 
     % variables
@@ -362,7 +362,7 @@ for i1=1:size(finfo2.Variables,2)
     end
     ex2=ex2(1:end-1);
     
-    % ‚±‚±‚©‚ç
+    % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     switch (finfo2.Variables(i1).Name)
 
         case{ 'PRES',...
@@ -409,23 +409,23 @@ for i1=1:size(finfo2.Variables,2)
 end
 
 %
-% ƒOƒ[ƒoƒ‹ƒAƒgƒŠƒrƒ…[ƒg‚Íã‚Ì•û–@‚Å‚Í“Ç‚İ‘‚«‚ªo—ˆ‚Ä‚¢‚È‚¢‚Ì‚Å
-% ƒOƒ[ƒoƒ‹‚É‚Â‚¢‚Ä‚ÍˆÈ‰º‚Å’Ç‰Á‚·‚éB
+% ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Aï¿½gï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½gï¿½Íï¿½Ì•ï¿½@ï¿½Å‚Í“Ç‚İï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Ì‚ï¿½
+% ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½É‚Â‚ï¿½ï¿½Ä‚ÍˆÈ‰ï¿½ï¿½Å’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½B
 %
 
-% history‚Édate_creation ‚Æ date_update‚ğ‘‚­A‚»‚Ìã‚Å‚±‚ÌƒvƒƒOƒ‰ƒ€ÀsŠÔ‚ğdata_update‚É’Ç‹L‚·‚é
+% historyï¿½ï¿½date_creation ï¿½ï¿½ date_updateï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ìï¿½Å‚ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ô‚ï¿½data_updateï¿½É’Ç‹Lï¿½ï¿½ï¿½ï¿½
 
 % file open
 ncid = netcdf.open([workpath updatefile],'NC_WRITE');
 
-% ’è‹`ƒ‚[ƒh‚É‚·‚é
+% ï¿½ï¿½`ï¿½ï¿½ï¿½[ï¿½hï¿½É‚ï¿½ï¿½ï¿½
 netcdf.reDef(ncid);
 
-% ƒOƒ[ƒoƒ‹ƒAƒgƒŠƒrƒ…[ƒg‚Ì’Ç‰Á
+% ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Aï¿½gï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½gï¿½Ì’Ç‰ï¿½
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical profile');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
-% history ‚ÌƒtƒH[ƒ}ƒbƒg•ÏX
+% history ï¿½Ìƒtï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½ÏX
 print_hist = formatHistory(DATE_CREATION,DATE_UPDATE);
 
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
@@ -437,17 +437,17 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'Conventions','Argo-3.1 CF-1.6');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'featureType','trajectoryProfile');
 
-% ƒtƒ@ƒCƒ‹‘‚«‚İ
+% ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 netcdf.endDef(ncid);
 netcdf.sync(ncid);
 netcdf.close(ncid);
 
 
-% ƒfƒoƒbƒOƒvƒŠƒ“ƒg
+% ï¿½fï¿½oï¿½bï¿½Oï¿½vï¿½ï¿½ï¿½ï¿½ï¿½g
 %ncdisp(tempfile);
 
-% Matlab©‘Ì‚àI—¹‚³‚¹‚éi©“®‹N“®ƒXƒNƒŠƒvƒg‚É•K—vj
-exit(0);
+% Matlabï¿½ï¿½ï¿½Ì‚ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½ï¿½É•Kï¿½vï¿½j
+%exit(0);
 end
 
 function ncid = exist_PSALcheck(ncid)
@@ -470,12 +470,13 @@ end
 function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
     % format creation date
     dc = reshape(DATE_CREATION,1,[]);
-    print_hist = srtcat(dc(1:4),`-`,dc(5:6),`-`,dc(7:8),`T`,dc(9:10),`:`,dc(11:12),`:`,dc(13:14),`Z creation;`);
+    print_hist = strcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
     
     % format update date
     du = reshape(DATE_UPDATE,1,[]);
     print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
     
     % add this tool execute date(UPDATE)
-    print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
+    print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ'));
+    print_hist = strcat(print_hist,' update');
 end
