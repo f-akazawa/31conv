@@ -311,7 +311,7 @@ for i1=1:size(finfo2.Variables,2)
             for i3=1:size(finfo2.Variables(i1).Attributes,2)
                 ncwriteatt(updatefile,finfo2.Variables(i1).Name,finfo2.Variables(i1).Attributes(i3).Name,finfo2.Variables(i1).Attributes(i3).Value);
                 if( strcmp(finfo2.Variables(i1).Name , DATE_CREATION) == 1) date_creation = finfo2.Variables(i1).Attributes(i3).Value;end
-                if( strcmp(finfo2.Variables(i1).Name , DATE_UPDATE) == 1) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
+                %if( strcmp(finfo2.Variables(i1).Name , DATE_UPDATE) == 1) date_update = finfo2.Variables(i1).Attributes(i3).Value;end
             end
             % data
             eval(['ncwrite(updatefile,finfo2.Variables(i1).Name,' finfo2.Variables(i1).Name ');'])
@@ -443,7 +443,7 @@ netcdf.close(ncid);
 
 
 % デバッグプリント
-%ncdisp(tempfile);
+ncdisp(tempfile);
 
 % Matlab自体も終了させる（自動起動スクリプト時に必要）
 exit(0);
