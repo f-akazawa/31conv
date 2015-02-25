@@ -23,7 +23,7 @@ end
 
 
 % �ŏI�o�̓t�@�C��������� (���t�@�C��_NEW.nc)
-updatefile = strcat(name,'_NEW',ext);
+updatefile = strcat(name,ext);
 
 % DB����ǂނ̂ɕK�v��WMO�ԍ����t�@�C�������甲���o���B�iD�t�@�C���̂ݕϊ��Ώہj
 wmo_no = strsplit(name,{'D','_'},'CollapseDelimiters',true);
@@ -158,17 +158,28 @@ netcdf.close(ncid);
 % DB��IP�A�h���X���ł��Ȃ̂ŁA�T�[�o���v���C�X��ɂ��ȉ��̍s�͕ύX���K�v
 % ��z����A���������Ƃ�����SQL�̍\���ς���Ă��A��������Ɍ��Ă�����ďC��
 logintimeout(5);
-conn=database('argo2012','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@192.168.22.43:1521:');
+conn=database('argo2012.hq.jamstec.go.jp','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@//192.168.22.43:1521/');
 %ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') , nvl(sensor_caldate,'' '') from float_info,sensor_axis_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and param_id=1']);
-ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') ,nvl(to_char(sensor_caldate,''yyyymmddhhmiss''),'' '') from float_info,sensor_axis_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and sensor_axis_info.argo_id=sensor_param_info.argo_id and sensor_axis_info.param_id=sensor_param_info.param_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and sensor_axis_info.param_id=1']);
+%ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' '') '') from float_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and sensor_axis_info.argo_id=sensor_param_info.argo_id and sensor_axis_info.param_id=sensor_param_info.param_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and sensor_axis_info.param_id=1']);
+ex1=exec(conn,['select nvl(float_sn,'' ''),nvl(firmware_version,'' ''),float_type_id,argo_id from float_info where wmo_no=''' wmo '''']);
 curs1=fetch(ex1);
+float_serial_no=curs1.Data{1}; % in use!
+firmware_version=curs1.Data{2};% in use!
+float_type_id=curs1.Data{3}; % this param is next SQL use.
+argo_id=curs1.Data{4}; % this param is next SQL use.
+
+ex11=exec(conn,['select nvl(float_name,'' '') from m_float_types where float_type_id=' num2str(float_type_id) ]);
+curs2=fetch(ex11);
+platform_type=curs2.Data;% in use!
+
+ex12=exec(conn,['select nvl(virtical_sampling_scheme,'' '') from float_mission_param_info where param_id=3 and argo_id=''' argo_id '''']);
+curs3=fetch(ex12);
+
+vertical_sampling_scheme=curs3.Data;% in use!
+
+%keyboard % this is debug stop command!!
 close(conn);
 
-platform_type=curs1.Data{1};
-float_serial_no=curs1.Data{2};
-firmware_version=curs1.Data{3};
-vertical_sampling_scheme=curs1.Data{4};
-%scienctific_calib_date=curs1.Data{5};
 
 % 3.1�ő������ϐ���ǉ��A��ԉ��ɒǉ�����Ă��܂��B�B
 nccreate([workpath tempfile],'PLATFORM_TYPE',...
@@ -177,7 +188,7 @@ nccreate([workpath tempfile],'PLATFORM_TYPE',...
 ncwriteatt([workpath tempfile],'PLATFORM_TYPE','long_name','Type of float');
 ncwriteatt([workpath tempfile],'PLATFORM_TYPE','conventions','Argo reference table 23');
 ncwriteatt([workpath tempfile],'PLATFORM_TYPE','_FillValue',' ');
-ncwrite([workpath tempfile],'PLATFORM_TYPE',sprintf('%-32s',platform_type)');
+ncwrite([workpath tempfile],'PLATFORM_TYPE',sprintf('%-32s',cell2mat(platform_type))');
 
 nccreate([workpath tempfile],'FLOAT_SERIAL_NO',...
     'Dimensions',{'STRING32','N_PROF'},...
@@ -199,7 +210,7 @@ nccreate([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',...
 ncwriteatt([workpath tempfile],'VERTICAL_SAMPLING_SCHEME','long_name','Vertical sampling scheme');
 ncwriteatt([workpath tempfile],'VERTICAL_SAMPLING_SCHEME','conventions','Argo reference table 16');
 ncwriteatt([workpath tempfile],'VERTICAL_SAMPLING_SCHEME','_FillValue',' ');
-ncwrite([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',sprintf('%-256s',vertical_sampling_scheme)');
+ncwrite([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',sprintf('%-256s',cell2mat(vertical_sampling_scheme))');
 
 nccreate([workpath tempfile],'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
@@ -426,7 +437,7 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical 
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history �̃t�H�[�}�b�g�ύX
-print_hist = formatHistory(DATE_CREATION,DATE_UPDATE);
+print_hist = formatHistory(DATE_CREATION);
 
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',print_hist);
@@ -447,7 +458,7 @@ netcdf.close(ncid);
 %ncdisp(tempfile);
 
 % Matlab���̂��I��������i�����N���X�N���v�g���ɕK�v�j
-%exit(0);
+exit(0);
 end
 
 function ncid = exist_PSALcheck(ncid)
@@ -467,16 +478,16 @@ catch err
 end
 end
 
-function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
+function print_hist = formatHistory(DATE_CREATION)
     % format creation date
     dc = reshape(DATE_CREATION,1,[]);
     print_hist = strcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
     
     % format update date
-    du = reshape(DATE_UPDATE,1,[]);
-    print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
+    % du = reshape(DATE_UPDATE,1,[]);
+    % print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
     
     % add this tool execute date(UPDATE)
     print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ'));
-    print_hist = strcat(print_hist,' update');
+    print_hist = strcat(print_hist,'converted');
 end
