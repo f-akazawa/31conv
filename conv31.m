@@ -159,8 +159,6 @@ netcdf.close(ncid);
 % ��z����A���������Ƃ�����SQL�̍\���ς���Ă��A��������Ɍ��Ă�����ďC��
 logintimeout(5);
 conn=database('argo2012.hq.jamstec.go.jp','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@//192.168.22.43:1521/');
-%ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' ''),nvl(obs_mode,'' '') , nvl(sensor_caldate,'' '') from float_info,sensor_axis_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and param_id=1']);
-%ex1=exec(conn,['select nvl(float_name,'' ''),nvl(float_sn,'' ''),nvl(firmware_version,'' '') '') from float_info,m_float_types,sensor_param_info where sensor_axis_info.argo_id=float_info.argo_id and sensor_axis_info.argo_id=sensor_param_info.argo_id and sensor_axis_info.param_id=sensor_param_info.param_id and float_info.float_type_id=m_float_types.float_type_id and wmo_no=''' wmo ''' and axis_no=1 and sensor_axis_info.param_id=1']);
 ex1=exec(conn,['select nvl(float_sn,'' ''),nvl(firmware_version,'' ''),float_type_id,argo_id from float_info where wmo_no=''' wmo '''']);
 curs1=fetch(ex1);
 float_serial_no=curs1.Data{1}; % in use!
@@ -172,7 +170,7 @@ ex11=exec(conn,['select nvl(float_name,'' '') from m_float_types where float_typ
 curs2=fetch(ex11);
 platform_type=curs2.Data;% in use!
 
-ex12=exec(conn,['select nvl(virtical_sampling_scheme,'' '') from float_mission_param_info where param_id=3 and argo_id=''' argo_id '''']);
+ex12=exec(conn,['select nvl(vertical_sampling_scheme,'' '') from float_mission_param_info where param_id=3 and argo_id=''' argo_id '''']);
 curs3=fetch(ex12);
 
 vertical_sampling_scheme=curs3.Data;% in use!
