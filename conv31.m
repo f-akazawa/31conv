@@ -246,6 +246,13 @@ ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
 ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
+% 20150123 add parameter
+%ncwrite([workpath tempfile],'HISTORY_INSTITUTION','JM',[1,1]);
+
+%ncwrite([workpath tempfile],'HISTORY_SOFTWARE','JMFC');
+%ncwrite([workpath tempfile],'HISTORY_SOFTWARE_RELEASE','1.0');
+%ncwrite([workpath tempfile],'HISTORY_DATE',strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update')));
+
 %
 % tempfile���ēǂݍ��݂��ă}�j���A�����ɕ��ёւ���
 %
@@ -435,7 +442,7 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical 
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history �̃t�H�[�}�b�g�ύX
-print_hist = formatHistory(DATE_CREATION);
+print_hist = formatHistory(DATE_CREATION,DATE_UPDATE);
 
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',print_hist);
@@ -476,16 +483,16 @@ catch err
 end
 end
 
-function print_hist = formatHistory(DATE_CREATION)
+function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
     % format creation date
     dc = reshape(DATE_CREATION,1,[]);
     print_hist = strcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
     
     % format update date
-    % du = reshape(DATE_UPDATE,1,[]);
-    % print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
+    du = reshape(DATE_UPDATE,1,[]);
+    print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z conversion to V3.1;');
     
     % add this tool execute date(UPDATE)
-    print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ'));
-    print_hist = strcat(print_hist,'converted');
+    print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SS'));
+    print_hist = strcat(print_hist,'Z update;');
 end
