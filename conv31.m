@@ -147,11 +147,45 @@ netcdf.putAtt(ncid,writeAttID1,'long_name','Error on the adjusted values as dete
 writeAttID2 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
 netcdf.putAtt(ncid,writeAttID2,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
 
+netcdf.inqVarID(ncid,'HISTORY_INSTITUTION');
 
 % �t�@�C����������
 netcdf.endDef(ncid);
+
+% 20150123 updated
+% get current dim length
+[dimname,dimlen] = netcdf.inqDim(ncid,netcdf.inqDimID(ncid,'N_HISTORY'));
+
+histID1 = netcdf.inqVarID(ncid,'HISTORY_INSTITUTION');
+writeInst = netcdf.getVar(ncid,histID1);
+instVal = 'JM  '; % const char
+instVal = instVal(:); % reshape 1x4 to 4x1
+writeInst(:,:,dimlen+1) = instVal; % add to end of table
+
+histID2 = netcdf.inqVarID(ncid,'HISTORY_SOFTWARE');
+writeSW = netcdf.getVar(ncid,histID2);
+softVal = 'JMFC';
+softVal = softVal(:);
+writeSW(:,:,dimlen+1) = softVal;
+
+histID3 = netcdf.inqVarID(ncid,'HISTORY_SOFTWARE_RELEASE');
+writeSR = netcdf.getVar(ncid,histID3);
+srVal = '1.0 ';
+srVal = srVal(:);
+writeSR(:,:,dimlen+1) = srVal;
+
+histID4 = netcdf.inqVarID(ncid,'HISTORY_DATE');
+writeDaTe = netcdf.getVar(ncid,histID4);
+dateVal = datestr(now-9/24,'yyyymmddHHMMSS');
+dateVal = dateVal(:);
+writeDaTe(:,:,dimlen+1) = dateVal;
+
+
 netcdf.sync(ncid);
 netcdf.close(ncid);
+
+
+
 
 % 3.1�ő������ϐ���ǉ��ADB����f�[�^���ǂ�ł���
 % �f�[�^�x�[�X�ڑ��ƕϐ��ւ̊i�[
@@ -159,23 +193,29 @@ netcdf.close(ncid);
 % ��z����A���������Ƃ�����SQL�̍\���ς���Ă��A��������Ɍ��Ă�����ďC��
 logintimeout(5);
 conn=database('argo2012.hq.jamstec.go.jp','argo','argo','oracle.jdbc.driver.OracleDriver','jdbc:oracle:thin:@//192.168.22.43:1521/');
-ex1=exec(conn,['select nvl(float_sn,'' ''),nvl(firmware_version,'' ''),float_type_id,argo_id from float_info where wmo_no=''' wmo '''']);
+ex1=exec(conn,['select nvl(float_sn,'' ''),nvl(firmware_version,'' ''),float_type_id,argo_id,float_manufac_id from float_info where wmo_no=''' wmo '''']);
 curs1=fetch(ex1);
 float_serial_no=curs1.Data{1}; % in use!
 firmware_version=curs1.Data{2};% in use!
 float_type_id=curs1.Data{3}; % this param is next SQL use.
 argo_id=curs1.Data{4}; % this param is next SQL use.
+float_manufac_id=curs1.Data{5}; % 20150311 add to check platform_type(MetOcean ID is 9)
 
 ex11=exec(conn,['select nvl(float_name,'' '') from m_float_types where float_type_id=' num2str(float_type_id) ]);
 curs2=fetch(ex11);
 platform_type=curs2.Data;% in use!
+
+if float_manufac_id == 9
+    platform_type='PROVOR_MT';
+    platform_type=cellstr(platform_type);
+end
 
 ex12=exec(conn,['select nvl(vertical_sampling_scheme,'' '') from float_mission_param_info where param_id=3 and argo_id=''' argo_id '''']);
 curs3=fetch(ex12);
 
 vertical_sampling_scheme=curs3.Data;% in use!
 
-%keyboard % this is debug stop command!!
+keyboard % this is debug stop command!!
 close(conn);
 
 
@@ -247,11 +287,13 @@ ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
 ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
 
 % 20150123 add parameter
-%ncwrite([workpath tempfile],'HISTORY_INSTITUTION','JM',[1,1]);
+ncwrite([workpath tempfile],'HISTORY_INSTITUTION',writeInst);
+ncwrite([workpath tempfile],'HISTORY_SOFTWARE',writeSW);
+ncwrite([workpath tempfile],'HISTORY_SOFTWARE_RELEASE',writeSR);
+ncwrite([workpath tempfile],'HISTORY_DATE',writeDaTe);
 
-%ncwrite([workpath tempfile],'HISTORY_SOFTWARE','JMFC');
-%ncwrite([workpath tempfile],'HISTORY_SOFTWARE_RELEASE','1.0');
-%ncwrite([workpath tempfile],'HISTORY_DATE',strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update')));
+save_updatedate = DATE_UPDATE;
+ncwrite([workpath tempfile],'DATE_UPDATE',datestr(now-9/24,'yyyymmddHHMMSS'));
 
 %
 % tempfile���ēǂݍ��݂��ă}�j���A�����ɕ��ёւ���
@@ -442,13 +484,13 @@ netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'title','Argo float vertical 
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'institution','JAMSTEC');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'source','Argo float');
 % history �̃t�H�[�}�b�g�ύX
-print_hist = formatHistory(DATE_CREATION,DATE_UPDATE);
+print_hist = formatHistory(DATE_CREATION,save_updatedate);
 
 %netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',datestr(now-9/24,'yyyy-mm-ddTHH:MM:SSZ update'));
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'history',print_hist);
 
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'reference','reference');
-netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','comment');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'references','http://www.argodatamgt.org/Documentation');
+netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'comment','free text');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'user_manual_version','3.1');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'Conventions','Argo-3.1 CF-1.6');
 netcdf.putAtt(ncid,netcdf.getConstant('NC_GLOBAL'),'featureType','trajectoryProfile');
@@ -483,16 +525,16 @@ catch err
 end
 end
 
-function print_hist = formatHistory(DATE_CREATION,DATE_UPDATE)
+function print_hist = formatHistory(DATE_CREATION,save_updatedate)
     % format creation date
     dc = reshape(DATE_CREATION,1,[]);
     print_hist = strcat(dc(1:4),'-',dc(5:6),'-',dc(7:8),'T',dc(9:10),':',dc(11:12),':',dc(13:14),'Z creation;');
     
     % format update date
-    du = reshape(DATE_UPDATE,1,[]);
-    print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z conversion to V3.1;');
+    du = reshape(save_updatedate,1,[]);
+    print_hist = strcat(print_hist,du(1:4),'-',du(5:6),'-',du(7:8),'T',du(9:10),':',du(11:12),':',du(13:14),'Z update;');
     
     % add this tool execute date(UPDATE)
     print_hist = strcat(print_hist,datestr(now-9/24,'yyyy-mm-ddTHH:MM:SS'));
-    print_hist = strcat(print_hist,'Z update;');
+    print_hist = strcat(print_hist,'Z conversion to V3.1;');
 end
