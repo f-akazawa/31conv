@@ -262,7 +262,7 @@ ncwrite([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',sprintf('%-256s',cell2mat
 nccreate([workpath tempfile],'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
 ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','long_name','Unique number denoting the missions performed by the float');
-ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','conventions','1...N , 1 : first complete mission');
+ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','conventions','1...N, 1 : first complete mission');
 ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','_FillValue',str2num('int32(99999)'));
 
 ncwrite([workpath tempfile],'CONFIG_MISSION_NUMBER',1);
@@ -295,6 +295,8 @@ ncwriteatt([workpath tempfile],'PSAL','standard_name','sea_water_salinity');
 ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','sea_water_pressure');
 ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','sea_water_temperature');
 ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','sea_water_salinity');
+
+ncwriteatt([workpath tempfile],'PRES','axis','Z');
 
 % 20150123 add parameter
 ncwrite([workpath tempfile],'HISTORY_INSTITUTION',writeInst);
