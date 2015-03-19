@@ -98,34 +98,44 @@ ncid = netcdf.open([workpath tempfile],'NC_WRITE');
 netcdf.reDef(ncid);
 
 % ���l�[������֐���ID���擾
-renFuncID = netcdf.inqVarID(ncid,'DATA_TYPE');
-renFuncID2 = netcdf.inqVarID(ncid,'FORMAT_VERSION');
-renFuncID3 = netcdf.inqVarID(ncid,'HANDBOOK_VERSION');
-renFuncID4 = netcdf.inqVarID(ncid,'REFERENCE_DATE_TIME');
-renFuncID5 = netcdf.inqVarID(ncid,'DATE_CREATION');
-renFuncID6 = netcdf.inqVarID(ncid,'CALIBRATION_DATE');
+
 % ���l�[��
-netcdf.renameAtt(ncid,renFuncID,'comment','long_name');
-netcdf.renameAtt(ncid,renFuncID2,'comment','long_name');
-netcdf.renameAtt(ncid,renFuncID3,'comment','long_name');
-netcdf.renameAtt(ncid,renFuncID4,'comment','long_name');
-netcdf.renameAtt(ncid,renFuncID5,'comment','long_name');
-netcdf.renameVar(ncid,renFuncID6,'SCIENTIFIC_CALIB_DATE');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'DATA_TYPE'),'comment','long_name');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'FORMAT_VERSION'),'comment','long_name');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'HANDBOOK_VERSION'),'comment','long_name');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'REFERENCE_DATE_TIME'),'comment','long_name');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'DATE_CREATION'),'comment','long_name');
+netcdf.renameVar(ncid,netcdf.inqVarID(ncid,'CALIBRATION_DATE'),'SCIENTIFIC_CALIB_DATE');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'PROJECT_NAME'),'comment','long_name');
+netcdf.renameAtt(ncid,netcdf.inqVarID(ncid,'PI_NAME'),'comment','long_name');
 
 % ���ڒǉ�
-netcdf.putAtt(ncid,renFuncID,'conventions','Argo reference table 1');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'DATA_TYPE'),'conventions','Argo reference table 1');
+
+% 20150317 coresponding GDAC validation
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'CYCLE_NUMBER'),'conventions','0...N, 0 : launch cycle (if exists), 1 : first complete cycle');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'JULD_QC'),'long_name','Quality on date and time');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PRES'),'long_name','Sea water pressure, equals 0 at sea-level');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED'),'long_name','Sea water pressure, equals 0 at sea-level');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'long_name','Practical salinity');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'long_name','Practical salinity');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'long_name','Sea temperature in-situ ITS-90 scale');
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'long_name','Sea temperature in-situ ITS-90 scale');
+
+% 20150317 put binary data(not ascii text)
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_max',single(41));
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_min',single(2));
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_max',single(41));
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_min',single(2));
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'valid_min',single(-2.5));
+netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'valid_min',single(-2.5));
 
 % ���ڍ폜
-delFuncID = netcdf.inqVarID(ncid,'PRES');
-netcdf.delAtt(ncid,delFuncID,'comment');
-delFuncID2 = netcdf.inqVarID(ncid,'PRES_ADJUSTED');
-netcdf.delAtt(ncid,delFuncID2,'comment');
-delFuncID3 = netcdf.inqVarID(ncid,'TEMP');
-netcdf.delAtt(ncid,delFuncID3,'comment');
-delFuncID4 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED');
-netcdf.delAtt(ncid,delFuncID4,'comment');
-delFuncID5 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
-netcdf.delAtt(ncid,delFuncID5,'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PRES'),'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED'),'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR'),'comment');
 
 % �v���t�@�C���ɂ���Ă�PSAL���������̂�����̂ňȉ��͑��݃`�F�b�N
 % ���������ʂ�function�ɔ�΂�
@@ -135,17 +145,16 @@ ncid = exist_PSALcheck(ncid);
 
 % SCIENTIFIC_CALIB_DATE��CALIBLATION_DATE�����l�[�����ė��p���Ă���
 % FillValue�����ɒǉ��������̂ň�x���ڂ��폜���Ă��Ƃŏ��Ԃɒǉ�����
-delFuncID9 = netcdf.inqVarID(ncid,'SCIENTIFIC_CALIB_DATE');
-netcdf.delAtt(ncid,delFuncID9,'_FillValue');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'SCIENTIFIC_CALIB_DATE'),'_FillValue');
 
 
 % 7.11�h���t�g�Œǉ��ɂȂ������ڂ������o��
 % PSAL_ADJUSTED_ERROR���ǉ��Ȃ̂���PSAL���Ȃ��f�[�^�̏ꍇ�͕ʊ֐�(exist_PSALcheck)�Ɉړ�
 writeAttID1 = netcdf.inqVarID(ncid,'PRES_ADJUSTED_ERROR');
-netcdf.putAtt(ncid,writeAttID1,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+netcdf.putAtt(ncid,writeAttID1,'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
 
 writeAttID2 = netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR');
-netcdf.putAtt(ncid,writeAttID2,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+netcdf.putAtt(ncid,writeAttID2,'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
 
 netcdf.inqVarID(ncid,'HISTORY_INSTITUTION');
 
@@ -215,7 +224,7 @@ curs3=fetch(ex12);
 
 vertical_sampling_scheme=curs3.Data;% in use!
 
-keyboard % this is debug stop command!!
+%keyboard % this is debug stop command!!
 close(conn);
 
 
@@ -253,8 +262,9 @@ ncwrite([workpath tempfile],'VERTICAL_SAMPLING_SCHEME',sprintf('%-256s',cell2mat
 nccreate([workpath tempfile],'CONFIG_MISSION_NUMBER',...
     'Dimensions',{'N_PROF'},'Datatype','int32');
 ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','long_name','Unique number denoting the missions performed by the float');
-ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','conventions','1..N , 1:first complete mission');
-ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','_FillValue',99999);
+ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','conventions','1...N , 1 : first complete mission');
+ncwriteatt([workpath tempfile],'CONFIG_MISSION_NUMBER','_FillValue',str2num('int32(99999)'));
+
 ncwrite([workpath tempfile],'CONFIG_MISSION_NUMBER',1);
 
 % format_version 2.2 > 3.1
@@ -262,10 +272,10 @@ ncwrite([workpath tempfile],'FORMAT_VERSION','3.1');
 
 % 3.1�Œǉ��ɂȂ����A�g���r���[�g��ǉ�
 ncwriteatt([workpath tempfile],'JULD','standard_name','time');
-ncwriteatt([workpath tempfile],'JULD','resolution','X');
+ncwriteatt([workpath tempfile],'JULD','resolution',str2num('1.e-5'));
 ncwriteatt([workpath tempfile],'JULD','axis','T');
 
-ncwriteatt([workpath tempfile],'JULD_LOCATION','resolution','X');
+ncwriteatt([workpath tempfile],'JULD_LOCATION','resolution',str2num('1.e-5'));
 
 ncwriteatt([workpath tempfile],'LATITUDE','standard_name','latitude');
 ncwriteatt([workpath tempfile],'LATITUDE','axis','Y');
@@ -278,13 +288,13 @@ ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','conventions','YYYYMMDDHH
 ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','_FillValue',' ');
 %ncwrite([workpath tempfile],'SCIENTIFIC_CALIB_DATE',sprintf('%-14s',scienctific_calib_date)');
 
-ncwriteatt([workpath tempfile],'PRES','standard_name','PRES');
-ncwriteatt([workpath tempfile],'TEMP','standard_name','TEMP');
-ncwriteatt([workpath tempfile],'PSAL','standard_name','PSAL');
+ncwriteatt([workpath tempfile],'PRES','standard_name','sea_water_pressure');
+ncwriteatt([workpath tempfile],'TEMP','standard_name','sea_water_temperature');
+ncwriteatt([workpath tempfile],'PSAL','standard_name','sea_water_salinity');
 
-ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','PRES_ADJUSTED');
-ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','TEMP_ADJUSTED');
-ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','PSAL_ADJUSTED');
+ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','sea_water_pressure');
+ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','sea_water_temperature');
+ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','sea_water_salinity');
 
 % 20150123 add parameter
 ncwrite([workpath tempfile],'HISTORY_INSTITUTION',writeInst);
@@ -294,6 +304,7 @@ ncwrite([workpath tempfile],'HISTORY_DATE',writeDaTe);
 
 save_updatedate = DATE_UPDATE;
 ncwrite([workpath tempfile],'DATE_UPDATE',datestr(now-9/24,'yyyymmddHHMMSS'));
+
 
 %
 % tempfile���ēǂݍ��݂��ă}�j���A�����ɕ��ёւ���
@@ -505,6 +516,7 @@ netcdf.close(ncid);
 %ncdisp(tempfile);
 
 % Matlab���̂��I��������i�����N���X�N���v�g���ɕK�v�j
+
 exit(0);
 end
 
@@ -518,7 +530,7 @@ try
     netcdf.delAtt(ncid,delFuncID8,'comment');
     
     writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
-    netcdf.putAtt(ncid,writeAttID3,'long_name','Error on the adjusted values as determined by the delayed mode QC process');
+    netcdf.putAtt(ncid,writeAttID3,'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
 
 catch err
     return;
