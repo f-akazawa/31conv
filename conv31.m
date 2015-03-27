@@ -94,6 +94,11 @@ end
 % file open
 ncid = netcdf.open([workpath tempfile],'NC_WRITE');
 
+% check exist PSAL
+exist_psal = 0; %inititalize
+ncid = exist_PSALcheck(ncid , exist_psal);
+
+
 % ��`���[�h�ɂ���
 netcdf.reDef(ncid);
 
@@ -117,16 +122,10 @@ netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'CYCLE_NUMBER'),'conventions','0...N, 0 
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'JULD_QC'),'long_name','Quality on date and time');
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PRES'),'long_name','Sea water pressure, equals 0 at sea-level');
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED'),'long_name','Sea water pressure, equals 0 at sea-level');
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'long_name','Practical salinity');
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'long_name','Practical salinity');
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'long_name','Sea temperature in-situ ITS-90 scale');
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'long_name','Sea temperature in-situ ITS-90 scale');
 
 % 20150317 put binary data(not ascii text)
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_max',single(41));
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_min',single(2));
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_max',single(41));
-netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_min',single(2));
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'valid_min',single(-2.5));
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'valid_min',single(-2.5));
 
@@ -139,7 +138,7 @@ netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR'),'comment');
 
 % �v���t�@�C���ɂ���Ă�PSAL���������̂�����̂ňȉ��͑��݃`�F�b�N
 % ���������ʂ�function�ɔ�΂�
-ncid = exist_PSALcheck(ncid);
+%ncid = exist_PSALcheck(ncid);
   
 
 
@@ -290,11 +289,14 @@ ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','_FillValue',' ');
 
 ncwriteatt([workpath tempfile],'PRES','standard_name','sea_water_pressure');
 ncwriteatt([workpath tempfile],'TEMP','standard_name','sea_water_temperature');
-ncwriteatt([workpath tempfile],'PSAL','standard_name','sea_water_salinity');
+
+if(exist_psal == 0)
+    ncwriteatt([workpath tempfile],'PSAL','standard_name','sea_water_salinity');
+    ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','sea_water_salinity');
+end
 
 ncwriteatt([workpath tempfile],'PRES_ADJUSTED','standard_name','sea_water_pressure');
 ncwriteatt([workpath tempfile],'TEMP_ADJUSTED','standard_name','sea_water_temperature');
-ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','sea_water_salinity');
 
 ncwriteatt([workpath tempfile],'PRES','axis','Z');
 
@@ -522,7 +524,7 @@ netcdf.close(ncid);
 exit(0);
 end
 
-function ncid = exist_PSALcheck(ncid)
+function ncid = exist_PSALcheck(ncid , exist_psal)
 try
     delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
     netcdf.delAtt(ncid,delFuncID6,'comment');
@@ -534,7 +536,18 @@ try
     writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
     netcdf.putAtt(ncid,writeAttID3,'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
 
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'long_name','Practical salinity');
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'long_name','Practical salinity');
+
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_max',single(41));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_min',single(2));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_max',single(41));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_min',single(2));
+
+    
+    exist_psal = 0;
 catch err
+    exist_psal = 1;
     return;
 end
 end
