@@ -533,7 +533,7 @@ netcdf.close(ncid);
 
 % Matlab���̂��I��������i�����N���X�N���v�g���ɕK�v�j
 
-%exit(0);
+exit(0);
 end
 
 
