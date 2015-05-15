@@ -94,10 +94,6 @@ end
 % file open
 ncid = netcdf.open([workpath tempfile],'NC_WRITE');
 
-% check exist PSAL
-exist_psal = 0; %inititalize
-ncid = exist_PSALcheck(ncid , exist_psal);
-
 
 % ��`���[�h�ɂ���
 netcdf.reDef(ncid);
@@ -125,6 +121,15 @@ netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED'),'long_name','Sea water 
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'long_name','Sea temperature in-situ ITS-90 scale');
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'long_name','Sea temperature in-situ ITS-90 scale');
 
+%20150515 PSAL ga nai profile tadasii taisaku.
+% check exist PSAL
+% dimension N_PARAM=2 is not PSAL , N_PARAM=3 is exist PSAL
+if(N_PARAM == 3)
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'long_name','Practical salinity');
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'long_name','Practical salinity');
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR'),'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
+end
+
 % 20150317 put binary data(not ascii text)
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'valid_min',single(-2.5));
 netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'valid_min',single(-2.5));
@@ -132,15 +137,22 @@ netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'valid_min',single(-2.5
 % ���ڍ폜
 netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PRES'),'comment');
 netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED'),'comment');
+netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PRES_ADJUSTED_ERROR'),'comment');
 netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP'),'comment');
 netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED'),'comment');
 netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'TEMP_ADJUSTED_ERROR'),'comment');
 
-% �v���t�@�C���ɂ���Ă�PSAL���������̂�����̂ňȉ��͑��݃`�F�b�N
-% ���������ʂ�function�ɔ�΂�
-%ncid = exist_PSALcheck(ncid);
-  
-
+% 20150515 PSAL ga nai profile tadasii taisaku.
+if(N_PARAM == 3)
+    netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'comment');
+    netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'comment');
+    netcdf.delAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR'),'comment');
+    
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_max',single(41));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_min',single(2));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_max',single(41));
+    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_min',single(2));
+end
 
 % SCIENTIFIC_CALIB_DATE��CALIBLATION_DATE�����l�[�����ė��p���Ă���
 % FillValue�����ɒǉ��������̂ň�x���ڂ��폜���Ă��Ƃŏ��Ԃɒǉ�����
@@ -290,7 +302,7 @@ ncwriteatt([workpath tempfile],'SCIENTIFIC_CALIB_DATE','_FillValue',' ');
 ncwriteatt([workpath tempfile],'PRES','standard_name','sea_water_pressure');
 ncwriteatt([workpath tempfile],'TEMP','standard_name','sea_water_temperature');
 
-if(exist_psal == 0)
+if(N_PARAM == 3)
     ncwriteatt([workpath tempfile],'PSAL','standard_name','sea_water_salinity');
     ncwriteatt([workpath tempfile],'PSAL_ADJUSTED','standard_name','sea_water_salinity');
 end
@@ -521,36 +533,9 @@ netcdf.close(ncid);
 
 % Matlab���̂��I��������i�����N���X�N���v�g���ɕK�v�j
 
-exit(0);
+%exit(0);
 end
 
-function ncid = exist_PSALcheck(ncid , exist_psal)
-try
-    delFuncID6 = netcdf.inqVarID(ncid,'PSAL');
-    netcdf.delAtt(ncid,delFuncID6,'comment');
-    delFuncID7 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED');
-    netcdf.delAtt(ncid,delFuncID7,'comment');
-    delFuncID8 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
-    netcdf.delAtt(ncid,delFuncID8,'comment');
-    
-    writeAttID3 = netcdf.inqVarID(ncid,'PSAL_ADJUSTED_ERROR');
-    netcdf.putAtt(ncid,writeAttID3,'long_name','Contains the error on the adjusted values as determined by the delayed mode QC process');
-
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'long_name','Practical salinity');
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'long_name','Practical salinity');
-
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_max',single(41));
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL'),'valid_min',single(2));
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_max',single(41));
-    netcdf.putAtt(ncid,netcdf.inqVarID(ncid,'PSAL_ADJUSTED'),'valid_min',single(2));
-
-    
-    exist_psal = 0;
-catch err
-    exist_psal = 1;
-    return;
-end
-end
 
 function print_hist = formatHistory(DATE_CREATION,save_updatedate)
     % format creation date
